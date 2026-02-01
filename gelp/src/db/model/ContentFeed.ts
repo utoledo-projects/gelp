@@ -6,6 +6,8 @@ export interface IContentFeed {
     concurrentPlayers?: number;
     price: number;
     feedImage?: string;
+    game: mongoose.Types.ObjectId;
+    type?: 'release' | 'sale' | 'update' | 'popular';
 }
 
 const contentFeedSchema = new mongoose.Schema<IContentFeed>({
@@ -27,6 +29,16 @@ const contentFeedSchema = new mongoose.Schema<IContentFeed>({
     },
     feedImage: {
         type: mongoose.Schema.Types.String,
+    },
+    game: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Game',
+        required: true
+    },
+    type: {
+        type: mongoose.Schema.Types.String,
+        enum: ['release', 'sale', 'update', 'popular'],
+        required: false
     }
 });
 
