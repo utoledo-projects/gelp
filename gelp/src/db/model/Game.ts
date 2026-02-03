@@ -6,6 +6,8 @@ export interface IGame {
     developer: string;
     releaseDate: Date;
     dateAdded: Date;
+    coverArt: string;
+    icon: string;
 }
 
 const gameSchema = new mongoose.Schema<IGame>({
@@ -32,6 +34,14 @@ const gameSchema = new mongoose.Schema<IGame>({
     dateAdded: {
         type: mongoose.Schema.Types.Date,
         required: true,
+    },
+    coverArt: {
+        type: mongoose.Schema.Types.String,
+        unique: true,
+    },
+    icon: {
+        type: mongoose.Schema.Types.String,
+        unique: true,
     }
 });
 
