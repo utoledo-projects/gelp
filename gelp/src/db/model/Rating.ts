@@ -17,10 +17,12 @@ const ratingSchema = new mongoose.Schema<IRating>({
     index: true,
   },
   game: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    index: true, // intentionally no ref
-  },
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Game",
+  required: true,
+  index: true,
+},
+
   score: {
     type: mongoose.Schema.Types.Number,
     required: true,
