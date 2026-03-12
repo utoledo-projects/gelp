@@ -8,9 +8,10 @@ export interface IUser {
   avatar?: string;
   createdAt: Date;
   updatedAt: Date;
+  isAdministrator: boolean;
 }
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<IUser>({
   username: {
     type: mongoose.Schema.Types.String,
     required: true,
@@ -41,6 +42,11 @@ const userSchema = new mongoose.Schema({
   updatedAt: {
     type: mongoose.Schema.Types.Date,
     default: () => new Date(),
+  },
+  isAdministrator: {
+    type: mongoose.Schema.Types.Boolean,
+    required: true,
+    default: false
   }
 });
 
