@@ -2,6 +2,8 @@
 
 import { useState, useCallback } from "react";
 
+import { useRef } from 'react';
+
 /* ─── Types ─────────────────────────────────────────────── */
 interface IGDBGame {
   id: number;
@@ -132,6 +134,7 @@ export default function AdminImportPage() {
   const [editingForm, setEditingForm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<Status>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const updateForm = useCallback((name: keyof GameForm, val: string) => {
     setForm((f) => ({ ...f, [name]: val }));
@@ -141,7 +144,7 @@ export default function AdminImportPage() {
     setForm(igdbToForm(g));
     setEditingForm(true);
     setStatus(null);
-    document.getElementById("game-form")?.scrollIntoView({ behavior: "smooth" });
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSearch = async () => {
@@ -338,7 +341,7 @@ export default function AdminImportPage() {
         </div>
 
         {/* ── Right: Form ── */}
-        <div id="game-form" className="flex flex-col gap-6">
+        <div ref={formRef} className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-mono uppercase tracking-widest text-zinc-400">Game Details</h2>
             {editingForm && (
