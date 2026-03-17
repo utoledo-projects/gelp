@@ -15,3 +15,7 @@ Pages that are placed in the `(authenticated)` directory will automatically redi
 ## Unauthenticated Pages
 
 Pages that do not require user authentication can be placed anywhere else.
+
+## Authenticated API routes
+
+Please see the `src/app/api/auth/me` route for an example of how to authenticate an API route. If the user is null, the user is not authenticated.
