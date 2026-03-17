@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import {ensureMongoose} from "@/db/mongoose";
+import { ensureMongoose } from "@/db/mongoose";
 import { Game } from "@/db/model/Game"; // adjust to your actual model path
+import getUser from "@/actions/getUser";
 
 export async function POST(req: NextRequest) {
+  // Begin Auth Check
+  const access = req.cookies.get('G_ACCESS_TOKEN');
+  const user = await getUser(access?.value);
+  if (user === null)
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized.' }), { status: 401 });
+  if (!user.isAdministrator)
+    return new NextResponse(JSON.stringify({ error: 'Forbidden.' }), { status: 403 });
+  // End auth check
   try {
     const body = await req.json();
     const { igdbID, title, genre, developer, releaseDate, coverArt, icon } = body;

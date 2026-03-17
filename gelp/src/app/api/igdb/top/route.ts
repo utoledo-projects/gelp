@@ -1,3 +1,4 @@
+import getUser from "@/actions/getUser";
 import { NextRequest, NextResponse } from "next/server";
 
 async function getIGDBToken(): Promise<string> {
@@ -22,6 +23,15 @@ async function getIGDBToken(): Promise<string> {
 }
 
 export async function GET(req: NextRequest) {
+
+  // Begin Auth Check
+  const access = req.cookies.get('G_ACCESS_TOKEN');
+  const user = await getUser(access?.value);
+  if (user === null)
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized.' }), { status: 401 });
+  if (!user.isAdministrator)
+    return new NextResponse(JSON.stringify({ error: 'Forbidden.' }), { status: 403 });
+  // End auth check
   const limit = req.nextUrl.searchParams.get("limit") ?? "10";
 
   try {
