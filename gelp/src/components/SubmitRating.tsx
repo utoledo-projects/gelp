@@ -22,25 +22,21 @@ export default function SubmitRating() {
   };
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h2>Rate this Game</h2>
+    <div className="p-10">
+      <h2 className="text-2xl font-semibold mb-4">Rate this Game</h2>
 
       <RatingStars onChange={setRating} />
 
-      <p>Your rating: {rating}</p>
+      <p className="mt-2 text-gray-700">Your rating: {rating}</p>
 
       <button
         onClick={submitRating}
         disabled={rating === 0 || loading}
-        style={{
-          backgroundColor: rating === 0 ? "#ccc" : "#0070f3",
-          color: "white",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          border: "none",
-          cursor: rating === 0 ? "not-allowed" : "pointer",
-          opacity: loading ? 0.8 : 1,
-        }}
+        className={`mt-4 px-5 py-2 rounded-md text-white transition
+          ${rating === 0 || loading 
+            ? "bg-gray-400 cursor-not-allowed opacity-80" 
+            : "bg-blue-500 hover:bg-blue-700"}
+        `}
       >
         {loading ? "Submitting..." : "Submit Rating"}
       </button>
