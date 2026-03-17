@@ -3,11 +3,9 @@ import mongoose from "mongoose";
 export interface IContentFeed {
     title: string;
     description: string;
-    concurrentPlayers?: number;
-    price: number;
     feedImage?: string;
     game: mongoose.Types.ObjectId;
-    type?: 'release' | 'sale' | 'update' | 'popular';
+    type?: 'release' | 'update' | 'popular' | 'recommendation';
 }
 
 const contentFeedSchema = new mongoose.Schema<IContentFeed>({
@@ -20,13 +18,6 @@ const contentFeedSchema = new mongoose.Schema<IContentFeed>({
         type: mongoose.Schema.Types.String,
         required: true
     },
-    concurrentPlayers: {
-        type: mongoose.Schema.Types.Number,
-    },
-    price: {
-        type: mongoose.Schema.Types.Number,
-        default: 0
-    },
     feedImage: {
         type: mongoose.Schema.Types.String,
     },
@@ -37,7 +28,7 @@ const contentFeedSchema = new mongoose.Schema<IContentFeed>({
     },
     type: {
         type: mongoose.Schema.Types.String,
-        enum: ['release', 'sale', 'update', 'popular'],
+        enum: ['release', 'update', 'popular', 'recommendation'],
         required: false
     }
 });

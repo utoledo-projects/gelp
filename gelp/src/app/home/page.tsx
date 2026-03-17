@@ -1,6 +1,7 @@
 import FeedPost from "@/components/feed/FeedPost";
 import FeedReviewPost from "@/components/feed/FeedReviewPost";
 import FeedFriendActivity from "@/components/feed/FeedFriendActivity";
+import { IUser } from "../../db/model/User";
 
 export default function SimpleDevPage() {
   return (
@@ -12,8 +13,8 @@ export default function SimpleDevPage() {
           <FeedPost
             title="Counter-Strike 2"
             description="The next installment in the world's premier tactical FPS."
-            price={0}
-            concurrentPlayers={1052972}
+            score={9.2}
+            reviewCount={9321}
             type="update"
             feedImage="https://images.igdb.com/igdb/image/upload/t_cover_big/coaczd.webp"
           />
@@ -21,8 +22,8 @@ export default function SimpleDevPage() {
           <FeedPost
             title="Nine Sols"
             description="A journey through a Taopunk world."
-            price={14.99}
-            concurrentPlayers={12500}
+            score={8.4}
+            reviewCount={53}
             type="recommendation"
             feedImage="https://images.igdb.com/igdb/image/upload/t_cover_big/co4l2s.webp"
           />
@@ -30,8 +31,8 @@ export default function SimpleDevPage() {
           <FeedPost
             title="Silksong"
             description="The long-awaited sequel to Hollow Knight."
-            price={34.99}
-            concurrentPlayers={50000}
+            score={8.5}
+            reviewCount={121}
             type="release"
             feedImage="https://images.igdb.com/igdb/image/upload/t_cover_big/cobebu.webp"
           />
@@ -39,9 +40,9 @@ export default function SimpleDevPage() {
           <FeedPost
             title="Cyberpunk 2077"
             description="Explore Night City in this open-world RPG."
-            price={29.99}
-            concurrentPlayers={84200}
-            type="sale"
+            score={8.6}
+            reviewCount={6433}
+            type="popular"
             feedImage="https://images.igdb.com/igdb/image/upload/t_cover_big/coaih8.webp"
           />
         </div>
@@ -52,20 +53,22 @@ export default function SimpleDevPage() {
 
           <div className="flex flex-col gap-4 overflow-y-auto max-h-[80vh] pr-2">
             <FeedReviewPost
-              user="GamerPro99"
+              user={{
+                username: "GamerPro99",
+                avatar: "https://i.pravatar.cc/100?img=9"
+              } as IUser}
               game="Elden Ring"
               review="Too hard, but I can't stop playing. The world design is incredible."
-              rating={4}
-              userImage="https://i.pravatar.cc/100?img=9"
+              score={9.5}
             />
-
-            <FeedFriendActivity
-              user="Jake"
-              action="started playing"
-              game="Helldivers 2"
-              userImage="https://i.pravatar.cc/100?img=12"
-              time="2 hours ago"
-            />
+            
+          <FeedFriendActivity
+            user={{
+              username: "Jake",
+              avatar: "https://i.pravatar.cc/100?img=12"
+            } as IUser}
+            game="Helldivers 2"
+          />            
           </div>
         </div>
 
