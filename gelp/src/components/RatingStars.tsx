@@ -16,7 +16,7 @@ export default function RatingStars({ onChange }: Props) {
 
   return (
     <div style={{ fontSize: "30px" }}>
-      {[1, 2, 3, 4, 5].map((star) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
         <span
           key={star}
           onClick={() => handleClick(star)}
