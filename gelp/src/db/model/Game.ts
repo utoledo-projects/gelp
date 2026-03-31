@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IGame {
-    genre: string;
+    genre: string[];
     title: string;
     developer: string;
     releaseDate: Date;
