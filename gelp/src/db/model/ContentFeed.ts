@@ -11,8 +11,7 @@ export interface IContentFeed {
 const contentFeedSchema = new mongoose.Schema<IContentFeed>({
     title: {
         type: mongoose.Schema.Types.String,
-        required: true,
-        unique: true
+        required: false
     },
     description: {
         type: mongoose.Schema.Types.String,

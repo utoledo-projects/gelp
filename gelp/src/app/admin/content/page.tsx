@@ -1,167 +1,116 @@
 "use client";
 
-import { useState } from "react";
-import { Gamepad2, MessageSquare, Activity } from "lucide-react";
-
-const handleScoreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-  let val = e.target.value.replace(/[^0-9.]/g, '');
-
-  const dotCount = (val.match(/\./g) || []).length;
-  if (dotCount > 1) {
-    val = val.slice(0, val.lastIndexOf('.'));
-  }
-
-  const match = val.match(/^(10|[0-9])?(\.[0-9]?)?/);
-  let cleanVal = match ? match[0] : "";
-
-  if (cleanVal.startsWith("10.")) {
-    const parts = cleanVal.split(".");
-    if (parts[1] && parts[1] !== "0") {
-      cleanVal = "10."; 
-    }
-  }
-
-  e.target.value = cleanVal;
-};
-
-const handleReviewInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const val = e.target.value.replace(/\D/g, '');               
-  e.target.value = val.length > 1 ? val.replace(/^0+/, '') : val;
-};
-
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  console.log("Form submitted");
-};
+import { useState, useEffect } from "react";
+import { Gamepad2, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function AdminContentPage() {
-  const [activeTab, setActiveTab] = useState<"game" | "review" | "activity">("game");
+  const [status, setStatus] = useState<{ type: 'success' | 'error', msg: string } | null>(null);
+  const [displayStatus, setDisplayStatus] = useState<{ type: 'success' | 'error', msg: string } | null>(null);
+
+  useEffect(() => {
+    if (status) {
+      setDisplayStatus(status);
+      const timer = setTimeout(() => setStatus(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("/api/contentfeed", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus({ type: 'error', msg: data.error || "Failed to publish" });
+        return;
+      }
+
+      setStatus({ type: 'success', msg: "Post published successfully!" });
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      setStatus({ type: 'error', msg: "Network error occurred." });
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-black text-white p-8 relative overflow-hidden">
+      
+      <div className={`fixed top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-in-out transform 
+        ${status ? "translate-y-0 opacity-100" : "-translate-y-16 opacity-0 pointer-events-none"}`}>
         
+        {displayStatus && (
+          <div className={`flex items-center gap-3 px-6 py-3 rounded-full border shadow-2xl backdrop-blur-xl
+            ${displayStatus.type === 'success' 
+              ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400" 
+              : "bg-red-500/10 border-red-500/40 text-red-400"}`}>
+            {displayStatus.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+            <span className="text-sm font-bold tracking-wide">{displayStatus.msg}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="max-w-4xl mx-auto">
         <header className="mb-10">
           <h1 className="text-3xl font-black tracking-tight text-indigo-400 uppercase">ADMIN PANEL</h1>
-          <p className="text-zinc-500 font-medium">Create and manage feed posts.</p>
+          <p className="text-zinc-500 font-medium">Create and manage global game feed posts.</p>
         </header>
 
-        <div className="flex gap-4 mb-8 border-b border-zinc-800 pb-4">
-          <TabButton 
-            active={activeTab === "game"} 
-            onClick={() => setActiveTab("game")} 
-            icon={<Gamepad2 size={18} />} 
-            label="Game Post" 
-          />
-          <TabButton 
-            active={activeTab === "review"} 
-            onClick={() => setActiveTab("review")} 
-            icon={<MessageSquare size={18} />} 
-            label="User Review" 
-          />
-          <TabButton 
-            active={activeTab === "activity"} 
-            onClick={() => setActiveTab("activity")} 
-            icon={<Activity size={18} />} 
-            label="Friend Activity" 
-          />
-        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative">
+          <div className="flex items-center gap-2 mb-8 text-indigo-400 border-b border-zinc-800 pb-4">
+            <Gamepad2 size={20} />
+            <span className="font-bold uppercase tracking-wider">New Game Post</span>
+          </div>
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl">
-          {activeTab === "game" && <GamePostForm />}
-          {activeTab === "review" && <ReviewPostForm />}
-          {activeTab === "activity" && <ActivityPostForm />}
-        </div>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <InputGroup name="title" label="Title" placeholder="Optional Title..." />
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <InputGroup name="gameId" label="Game ID" placeholder="69cc1da4d6414217e7192a06" required />
+
+              <div className="flex flex-col gap-1.5 flex-1">
+                <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Post Type</label>
+                <select 
+                  name="postType"
+                  className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm outline-none focus:border-indigo-400 text-white cursor-pointer h-[46px] w-full"
+                  defaultValue=""
+                >
+                  <option value="">None</option>
+                  <option value="popular">Popular</option>
+                  <option value="release">Release</option>
+                  <option value="update">Update</option>
+                  <option value="recommendation">Recommendation</option>
+                </select>
+              </div>
+            </div>
+
+            <InputGroup name="imageUrl" label="Feed Image (URL)" placeholder="https://example.com/image.jpg" />
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider text-zinc-500">Feed Description</label>
+              <textarea 
+                name="description"
+                required
+                className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm min-h-[120px] outline-none focus:border-indigo-400 text-white placeholder:text-zinc-600 transition-all" 
+                placeholder="Enter a brief summary for the feed card..."
+              />
+            </div>
+
+            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-indigo-600/20">
+              Publish Post
+            </button>
+          </form>
+        </div>
       </div>
     </main>
-  );
-}
-
-function GamePostForm() {
-  return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-2 gap-4">
-        <InputGroup label="Game Title" placeholder="Enter game title..." />
-        
-        <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Post Type Option</label>
-          <select className="bg-zinc-800 border border-zinc-700 rounded-lg p-2.5 text-sm outline-none focus:border-indigo-500 text-white cursor-pointer">
-            <option value="popular">Popular</option>
-            <option value="release">Release</option>
-            <option value="update">Update</option>
-            <option value="recommendation">Recommendation</option>
-          </select>
-        </div>
-      </div>
-      
-      <InputGroup label="Feed Image (URL)" placeholder="https://example.com/image.jpg" />
-      
-      <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Feed Description</label>
-        <textarea 
-          className="bg-zinc-800 border border-zinc-700 rounded-lg p-2.5 text-sm min-h-[100px] outline-none focus:border-indigo-500 placeholder:text-zinc-600 text-white" 
-          placeholder="Enter a brief summary for the feed card..."
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <InputGroup label="Score (0-10)" type="text" placeholder="0.0" onChange={handleScoreInput} />
-        <InputGroup label="Review Count" type="text" placeholder="0" onChange={handleReviewInput} />
-      </div>
-
-      <SubmitButton />
-    </form>
-  );
-}
-
-function ReviewPostForm() {
-  return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-2 gap-4">
-        <InputGroup label="Username" placeholder="Enter reviewer username..." />
-        <InputGroup label="Game Title" placeholder="Enter game name..." />
-      </div>
-
-      <InputGroup label="Avatar Image URL" placeholder="https://example.com/avatar.jpg" />
-      <InputGroup label="User Rating (0-10)" type="text" placeholder="0.0" onChange={handleScoreInput} />
-
-      <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Review Content</label>
-        <textarea 
-          className="bg-zinc-800 border border-zinc-700 rounded-lg p-2.5 text-sm min-h-[80px] outline-none focus:border-indigo-500 placeholder:text-zinc-600 text-white" 
-          placeholder="Paste the review snippet here..."
-        />
-      </div>
-
-      <SubmitButton />
-    </form>
-  );
-}
-
-function ActivityPostForm() {
-  return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <InputGroup label="User Target" placeholder="Enter username..." />
-      <InputGroup label="User Avatar URL" placeholder="https://example.com/avatar.jpg" />
-      <InputGroup label="Game Name" placeholder="Enter game name..." />
-      <SubmitButton />
-    </form>
-  );
-}
-
-function TabButton({ active, onClick, icon, label }: any) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${
-        active ? "bg-indigo-600 text-white shadow-lg" : "text-zinc-500 hover:text-zinc-300"
-      }`}
-    >
-      {icon}
-      {label}
-    </button>
   );
 }
 
@@ -170,20 +119,9 @@ function InputGroup({ label, ...props }: any) {
     <div className="flex flex-col gap-1.5 flex-1">
       <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">{label}</label>
       <input 
-        className="bg-zinc-800 border border-zinc-700 rounded-lg p-2.5 text-sm outline-none focus:border-indigo-500 transition-colors placeholder:text-zinc-600 text-white" 
+        className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm outline-none focus:border-indigo-400 text-white transition-colors placeholder:text-zinc-600 w-full" 
         {...props} 
       />
     </div>
-  );
-}
-
-function SubmitButton() {
-  return (
-    <button 
-      type="submit" 
-      className="w-full mt-6 flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl transition-all active:scale-[0.95] shadow-lg"
-    >
-      Publish Post
-    </button>
   );
 }
