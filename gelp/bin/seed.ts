@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import {ensureMongoose} from "@/db";
+import {ensureMongoose, User, Game } from "@/db";
 import {hash} from "argon2";
 
 await ensureMongoose();
@@ -75,6 +75,53 @@ const christopher = await User.create({
   password: await hash(SEEDED_USER_PASSWORD),
 });
 
+const NOW = new Date();
+
+const games = [
+  {
+    title: 'The Legend of Zelda: Breath of the Wild',
+    genre: ['Action', 'Adventure'],
+    developer: 'Nintendo EPD',
+    releaseDate: new Date('2017-03-03'),
+    dateAdded: NOW,
+    coverArt: '/game-covers/zelda-botw.jpg',
+    icon: '/game-icons/zelda-botw.png',
+    igdbID: 10101,
+  },
+  {
+    title: 'Hollow Knight',
+    genre: ['Metroidvania', 'Platformer'],
+    developer: 'Team Cherry',
+    releaseDate: new Date('2017-02-24'),
+    dateAdded: NOW,
+    coverArt: '/game-covers/hollow-knight.jpg',
+    icon: '/game-icons/hollow-knight.png',
+    igdbID: 20202,
+  },
+  {
+    title: 'Stardew Valley',
+    genre: ['Simulation', 'RPG'],
+    developer: 'ConcernedApe',
+    releaseDate: new Date('2016-02-26'),
+    dateAdded: NOW,
+    coverArt: '/game-covers/stardew.jpg',
+    icon: '/game-icons/stardew.png',
+    igdbID: 30303,
+  },
+];
+
+try {
+   await Game.create(games);
+  const created = await Game.find({ title: { $in: games.map(g => g.title) } });
+  console.log('Seeded games:', created.map(g => ({ title: g.title, id: g._id })));
+} catch (err: any) {
+  if (err && err.code === 11000) {
+    console.warn('Some games already exist (duplicate key).');
+  } else {
+    console.error('Error seeding games:', err);
+    process.exit(1);
+  }
+}
 // In order to use a user, link it using the user's ._id value, for example
 // const Token = await Token.create({user: james._id});
 
