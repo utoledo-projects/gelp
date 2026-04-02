@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ensureMongoose } from "@/db/mongoose";
 import { ContentFeed } from "@/db/model/ContentFeed";
 import { Game } from "@/db/model/Game";
 import getUser from "@/actions/getUser";
@@ -24,19 +23,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await ensureMongoose();
-
     const targetGame = await Game.findById(gameId);
     if (!targetGame) {
       return NextResponse.json({ error: "Game not found with the provided ID" }, { status: 404 });
     }
 
-    const finalTitle = title || targetGame.title;
-
+    const finalTitle = title?.trim() || targetGame.title;
+    const finalImage = imageUrl?.trim() || targetGame.coverArt;
+    
     const newPost = await ContentFeed.create({
       title: finalTitle,
       description,
-      feedImage: imageUrl,
+      feedImage: finalImage,
       game: gameId,
       type: postType || undefined,
     });

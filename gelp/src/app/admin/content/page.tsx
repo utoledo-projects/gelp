@@ -92,7 +92,7 @@ export default function AdminContentPage() {
               </div>
             </div>
 
-            <InputGroup name="imageUrl" label="Feed Image (URL)" placeholder="https://example.com/image.jpg" />
+            <InputGroup name="imageUrl" label="Feed Image (URL)" placeholder="Optional Image URL..." />
 
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider text-zinc-500">Feed Description</label>
