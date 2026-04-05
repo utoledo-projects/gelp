@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "seed": "tsx bin/seed.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "argon2": "^0.44.0",
