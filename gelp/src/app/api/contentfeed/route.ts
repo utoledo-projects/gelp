@@ -45,3 +45,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
+
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
+  const skip = Number(url.searchParams.get("skip")) || 0;
+  const limit = Number(url.searchParams.get("limit")) || 100;
+
+  try {
+    const posts = await ContentFeed
+      .find()
+      .sort({ createdAt: 1, _id: 1 })
+      .skip(skip)
+      .limit(limit)
+
+    return NextResponse.json(posts);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
