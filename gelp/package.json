@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "seed": "tsx bin/seed.ts"
+    "seed": "tsx bin/seed.ts",
+    "test": "jest"
   },
   "dependencies": {
     "argon2": "^0.44.0",
@@ -21,10 +22,15 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.39",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "jest": "^30.3.0",
+    "jest-environment-node": "^30.3.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5"
   }
