@@ -4,6 +4,7 @@ import { Game } from "@/db/model/Game";
 import getUser from "@/actions/getUser";
 
 export async function POST(req: NextRequest) {
+  try {
   // Begin Auth Check
   const access = req.cookies.get('G_ACCESS_TOKEN');
   const user = await getUser(access?.value);
@@ -12,7 +13,6 @@ export async function POST(req: NextRequest) {
   if (!user.isAdministrator)
     return new NextResponse(JSON.stringify({ error: 'Forbidden.' }), { status: 403 });
   // End auth check
-  try {
     const body = await req.json();
     const { title, description, imageUrl, gameId, postType } = body;
 

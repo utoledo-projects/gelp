@@ -1,11 +1,6 @@
 import '@testing-library/jest-dom';
-import { webcrypto } from 'node:crypto';
+import { TextEncoder, TextDecoder } from 'util';
 
-if (global.Request === undefined) {
-  const { Request, Response, Headers, NextRequest, NextResponse } = require('next/dist/compiled/@edge-runtime/primitives');
-  Object.assign(global, { Request, Response, Headers, NextRequest, NextResponse });
-}
-
-if (!global.crypto) {
-  Object.assign(global, { crypto: webcrypto });
-}
+global.TextEncoder = TextEncoder;
+// @ts-ignore
+global.TextDecoder = TextDecoder;
