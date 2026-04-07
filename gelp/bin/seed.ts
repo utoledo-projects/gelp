@@ -139,26 +139,23 @@ try {
   const [zelda, hollow, stardew] = created;
 
 await Rating.create([
-  {
-    user: james._id,
-    game: zelda._id,
-    score: 9,
-  },
-  {
-    user: michael._id,
-    game: hollow._id,
-    score: 8,
-  },
-  {
-    user: john._id,
-    game: stardew._id,
-    score: 10,
-  },
-  {
-    user: robert._id,
-    game: zelda._id,
-    score: 7,
-  },
+  { user: james._id, game: zelda._id, score: 9 },
+  { user: michael._id, game: zelda._id, score: 8 },
+  { user: john._id, game: zelda._id, score: 10 },
+  { user: robert._id, game: zelda._id, score: 7 },
+  { user: david._id, game: zelda._id, score: 9 },
+
+  { user: william._id, game: hollow._id, score: 8 },
+  { user: richard._id, game: hollow._id, score: 9 },
+  { user: joseph._id, game: hollow._id, score: 7 },
+  { user: thomas._id, game: hollow._id, score: 10 },
+  { user: christopher._id, game: hollow._id, score: 8 },
+
+  { user: james._id, game: stardew._id, score: 10 },
+  { user: michael._id, game: stardew._id, score: 9 },
+  { user: john._id, game: stardew._id, score: 8 },
+  { user: robert._id, game: stardew._id, score: 7 },
+  { user: david._id, game: stardew._id, score: 9 },
 ]);
 
 console.log("Seeded ratings successfully");
