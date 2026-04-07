@@ -36,7 +36,8 @@ export const POST = async (req: Request) => {
     headers: {
       'Set-Cookie': [
         `G_ACCESS_TOKEN=${accessToken.token}; HttpOnly; Secure; Path=/; Max-Age=${60 * 60}`,
-        `G_REFRESH_TOKEN=${refreshToken.token}; HttpOnly; Secure; Path=/api/auth/refresh; Max-Age=${7 * 24 * 60 * 60}`
+        `G_REFRESH_TOKEN=${refreshToken.token}; HttpOnly; Secure; Path=/api/auth/refresh; Max-Age=${7 * 24 * 60 * 60}`,
+        `G_REFRESH_TOKEN=${refreshToken.token}; HttpOnly; Secure; Path=/api/auth/logout; Max-Age=${7 * 24 * 60 * 60}`
       ].join(',')
     }
   });
