@@ -185,6 +185,28 @@ console.log("Seeded ratings successfully");
     }
   ]);
 
+  await UserActivity.create([
+    {
+      username: james._id,
+      game: zelda._id,
+      type: 'REVIEW',
+      score: 1,
+      review: "The worse game I've ever played. I can't believe people like this."
+    },
+    {
+      username: michael._id,
+      game: zelda._id,
+      type: 'REVIEW',
+      score: 10,
+      review: "Absolute cinema."
+    },
+    {
+      username: michael._id,
+      game: hollow._id,
+      type: 'ADD_TO_LIBRARY'
+    }
+  ]);  
+
 } catch (err: any) {
   if (err && err.code === 11000) {
     console.warn('Some data already exists.');
