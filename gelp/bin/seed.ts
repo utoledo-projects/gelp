@@ -84,9 +84,9 @@ const games = [
     developer: 'Nintendo EPD',
     releaseDate: new Date('2017-03-03'),
     dateAdded: NOW,
-    coverArt: '/game-covers/zelda-botw.jpg',
-    icon: '/game-icons/zelda-botw.png',
-    igdbID: 10101,
+    coverArt: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.jpg',
+    icon: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.jpg',
+    igdbID: 7346,
   },
   {
     title: 'Hollow Knight',
@@ -94,9 +94,9 @@ const games = [
     developer: 'Team Cherry',
     releaseDate: new Date('2017-02-24'),
     dateAdded: NOW,
-    coverArt: '/game-covers/hollow-knight.jpg',
-    icon: '/game-icons/hollow-knight.png',
-    igdbID: 20202,
+    coverArt: 'https://images.igdb.com/igdb/image/upload/t_cover_big/cobfzp.jpg',
+    icon: 'https://images.igdb.com/igdb/image/upload/t_cover_big/cobfzp.jpg',
+    igdbID: 14593,
   },
   {
     title: 'Stardew Valley',
@@ -104,9 +104,9 @@ const games = [
     developer: 'ConcernedApe',
     releaseDate: new Date('2016-02-26'),
     dateAdded: NOW,
-    coverArt: '/game-covers/stardew.jpg',
-    icon: '/game-icons/stardew.png',
-    igdbID: 30303,
+    coverArt: 'https://images.igdb.com/igdb/image/upload/t_cover_big/coa93h.jpg',
+    icon: 'https://images.igdb.com/igdb/image/upload/t_cover_big/coa93h.jpg',
+    igdbID: 17000,
   },
 ];
 
