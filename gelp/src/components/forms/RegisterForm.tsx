@@ -54,7 +54,6 @@ const RegisterForm: FC = () => {
         if (issue.path.includes('confirmPassword') && confirmPassword.length === 0) return false;
         return true;
       }));
-      console.log(validity);
     } else setIssues([]);
   }, [username, email, confirmEmail, password, confirmPassword]);
 
