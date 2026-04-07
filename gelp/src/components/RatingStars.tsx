@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 type Props = {
@@ -15,19 +17,24 @@ export default function RatingStars({ onChange }: Props) {
   };
 
   return (
-    <div style={{ fontSize: "30px" }}>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
-        <span
-          key={star}
-          onClick={() => handleClick(star)}
-          style={{
-            cursor: "pointer",
-            color: star <= rating ? "gold" : "gray",
-          }}
-        >
-          ★
-        </span>
-      ))}
+    <div>
+      {[...Array(10)].map((_, i) => {
+        const starValue = i + 1;
+
+        return (
+          <span
+            key={starValue}
+            onClick={() => handleClick(starValue)}
+            style={{
+              cursor: "pointer",
+              color: starValue <= rating ? "gold" : "gray",
+              fontSize: "24px",
+            }}
+          >
+            ★
+          </span>
+        );
+      })}
     </div>
   );
 }
