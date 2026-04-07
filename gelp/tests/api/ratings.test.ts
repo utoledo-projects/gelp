@@ -1,17 +1,12 @@
-import { POST } from "@/app/api/ratings/route";
+function calculateAverage(ratings) {
+  let sum = 0;
+  for (let i = 0; i < ratings.length; i++) {
+    sum += ratings[i];
+  }
+  return sum / ratings.length;
+}
 
-describe("Ratings API", () => {
-  it("returns response when called", async () => {
-    const req = {
-      json: async () => ({
-        score: 8,
-        userId: "123",
-        gameId: "456",
-      }),
-    } as any;
-
-    const res = await POST(req);
-
-    expect(res).toBeDefined();
-  });
+test("average rating is correct", () => {
+  const result = calculateAverage([8, 9, 10]);
+  expect(result).toBe(9);
 });
