@@ -11,8 +11,8 @@ const UserDetails = () => {
   return <div className='p-4'>
     {Object.entries(user).map(([key, value]) => {
       if (value instanceof Date)
-        return <p>{key}: {value.toLocaleString()}</p>
-      return <p>{key}: {value.toString()}</p>
+        return <p key={key}>{key}: {value.toLocaleString()}</p>
+      return <p key={key}>{key}: {value.toString()}</p>
     })}
   </div>
 }
