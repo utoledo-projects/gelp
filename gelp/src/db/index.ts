@@ -7,3 +7,4 @@ export * from './model/User';
 export * from './model/Game';
 export * from './model/ContentFeed';
 export * from "./model/Rating";
+export * from "./model/UserActivity";

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ContentFeed } from "@/db/model/ContentFeed";
 import { Game } from "@/db/model/Game";
+import { Rating } from "@/db/model/Rating";
 import getUser from "@/actions/getUser";
 
 export async function POST(req: NextRequest) {
@@ -57,8 +58,30 @@ export async function GET(req: NextRequest) {
       .sort({ createdAt: 1, _id: 1 })
       .skip(skip)
       .limit(limit)
+      .lean();
+    
+    const postsWithStats = await Promise.all(
+          posts.map(async (post) => {
+            const stats = await Rating.aggregate([
+              { $match: { game: post.game } }, 
+              {
+                $group: {
+                  _id: null,
+                  avgScore: { $avg: "$score" },
+                  totalRatings: { $sum: 1 },
+                },
+              },
+            ]);
 
-    return NextResponse.json(posts);
+            return {
+              ...post,
+              score: stats[0]?.avgScore || 0,
+              reviewCount: stats[0]?.totalRatings || 0,
+            };
+          })
+        );      
+
+    return NextResponse.json(postsWithStats);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown error";
     return NextResponse.json({ error: message }, { status: 500 });
