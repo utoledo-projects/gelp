@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { ensureMongoose, User, Game, Rating } from "@/db";
+import { ensureMongoose, User, Game, Rating, ContentFeed, UserActivity } from "@/db";
 import { hash } from "argon2";
 
 console.log("SEED STARTED");
