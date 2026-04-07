@@ -14,7 +14,8 @@ export async function GET(req: NextRequest) {
       .skip(skip)
       .limit(limit)
       .populate("username") 
-      .populate("game");
+      .populate("game")
+      .populate("rating");
 
     return NextResponse.json(activities);
   } catch (err: unknown) {

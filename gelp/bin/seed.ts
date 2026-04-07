@@ -139,27 +139,27 @@ try {
 
   const [zelda, hollow, stardew] = created;
 
-await Rating.create([
-  { user: james._id, game: zelda._id, score: 9 },
-  { user: michael._id, game: zelda._id, score: 8 },
-  { user: john._id, game: zelda._id, score: 10 },
-  { user: robert._id, game: zelda._id, score: 7 },
-  { user: david._id, game: zelda._id, score: 9 },
+  const ratings = await Rating.create([
+    { user: james._id, game: zelda._id, score: 9, review: "One of the my favorite games!" },
+    { user: michael._id, game: zelda._id, score: 8, review: "Absolute cinema." },
+    { user: john._id, game: zelda._id, score: 10 },
+    { user: robert._id, game: zelda._id, score: 7 },
+    { user: david._id, game: zelda._id, score: 9 },
 
-  { user: william._id, game: hollow._id, score: 8 },
-  { user: richard._id, game: hollow._id, score: 9 },
-  { user: joseph._id, game: hollow._id, score: 7 },
-  { user: thomas._id, game: hollow._id, score: 10 },
-  { user: christopher._id, game: hollow._id, score: 8 },
+    { user: william._id, game: hollow._id, score: 8 },
+    { user: richard._id, game: hollow._id, score: 9 },
+    { user: joseph._id, game: hollow._id, score: 7 },
+    { user: thomas._id, game: hollow._id, score: 10 },
+    { user: christopher._id, game: hollow._id, score: 8 },
 
-  { user: james._id, game: stardew._id, score: 10 },
-  { user: michael._id, game: stardew._id, score: 9 },
-  { user: john._id, game: stardew._id, score: 8 },
-  { user: robert._id, game: stardew._id, score: 7 },
-  { user: david._id, game: stardew._id, score: 9 },
-]);
+    { user: james._id, game: stardew._id, score: 10 },
+    { user: michael._id, game: stardew._id, score: 9 },
+    { user: john._id, game: stardew._id, score: 8 },
+    { user: robert._id, game: stardew._id, score: 7 },
+    { user: david._id, game: stardew._id, score: 9 },
+  ]);
 
-console.log("Seeded ratings successfully");
+  console.log("Seeded ratings successfully");
 
   await ContentFeed.create([
     {
@@ -190,15 +190,14 @@ console.log("Seeded ratings successfully");
       username: james._id,
       game: zelda._id,
       type: 'REVIEW',
-      score: 1,
-      review: "The worse game I've ever played. I can't believe people like this."
+      rating: ratings[0]._id
     },
     {
       username: michael._id,
       game: zelda._id,
       type: 'REVIEW',
-      score: 10,
-      review: "Absolute cinema."
+      rating: ratings[1]._id
+
     },
     {
       username: michael._id,

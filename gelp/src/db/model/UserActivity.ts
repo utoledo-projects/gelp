@@ -4,8 +4,7 @@ export interface IUserActivity {
   username: mongoose.Types.ObjectId;
   game: mongoose.Types.ObjectId;
   type: 'ADD_TO_LIBRARY' | 'REVIEW';
-  score?: number;
-  review?: string;
+  rating?: mongoose.Types.ObjectId;
 }
 
 const userActivitySchema = new mongoose.Schema<IUserActivity>({
@@ -25,13 +24,9 @@ const userActivitySchema = new mongoose.Schema<IUserActivity>({
     enum: ['ADD_TO_LIBRARY', 'REVIEW'],
     required: true,
   },
-  score: {
-    type: Number,
-    min: 0,
-    max: 10,
-  },
-  review: {
-    type: String,
+  rating: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Rating",
   }
 });
 

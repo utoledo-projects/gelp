@@ -96,8 +96,8 @@ export default function SimpleDevPage() {
               description={post.description}
               type={post.type}
               feedImage={post.feedImage}
-              score={0}
-              reviewCount={0}
+              score={post.score}
+              reviewCount={post.reviewCount}
             />
           ))}
 
@@ -121,8 +121,8 @@ export default function SimpleDevPage() {
                       key={act._id}
                       user={act.username}
                       game={act.game.title}
-                      review={act.review || ""}
-                      score={act.score || 0}
+                      review={act.rating?.review || ""}
+                      score={act.rating?.score || 0}
                     />
                   );
                 }
