@@ -1,10 +1,16 @@
 import 'dotenv/config';
-import {ensureMongoose, User, Game } from "@/db";
-import {hash} from "argon2";
+import { ensureMongoose, User, Game, Rating } from "@/db";
+import { hash } from "argon2";
+
+console.log("SEED STARTED");
 
 await ensureMongoose();
 
 const SEEDED_USER_PASSWORD = 'P@55w0rd';
+
+// =========================
+// USERS
+// =========================
 
 const james = await User.create({
   username: 'james',
@@ -75,6 +81,10 @@ const christopher = await User.create({
   password: await hash(SEEDED_USER_PASSWORD),
 });
 
+// =========================
+// GAMES
+// =========================
+
 const NOW = new Date();
 
 const games = [
@@ -111,19 +121,55 @@ const games = [
 ];
 
 try {
-   await Game.create(games);
-  const created = await Game.find({ title: { $in: games.map(g => g.title) } });
-  console.log('Seeded games:', created.map(g => ({ title: g.title, id: g._id })));
+  await Game.create(games);
+
+  const created = await Game.find({
+    title: { $in: games.map(g => g.title) },
+  });
+
+  console.log(
+    'Seeded games:',
+    created.map(g => ({ title: g.title, id: g._id }))
+  );
+
+  // =========================
+  // RATINGS
+  // =========================
+
+  const [zelda, hollow, stardew] = created;
+
+await Rating.create([
+  { user: james._id, game: zelda._id, score: 9 },
+  { user: michael._id, game: zelda._id, score: 8 },
+  { user: john._id, game: zelda._id, score: 10 },
+  { user: robert._id, game: zelda._id, score: 7 },
+  { user: david._id, game: zelda._id, score: 9 },
+
+  { user: william._id, game: hollow._id, score: 8 },
+  { user: richard._id, game: hollow._id, score: 9 },
+  { user: joseph._id, game: hollow._id, score: 7 },
+  { user: thomas._id, game: hollow._id, score: 10 },
+  { user: christopher._id, game: hollow._id, score: 8 },
+
+  { user: james._id, game: stardew._id, score: 10 },
+  { user: michael._id, game: stardew._id, score: 9 },
+  { user: john._id, game: stardew._id, score: 8 },
+  { user: robert._id, game: stardew._id, score: 7 },
+  { user: david._id, game: stardew._id, score: 9 },
+]);
+
+console.log("Seeded ratings successfully");
+
 } catch (err: any) {
   if (err && err.code === 11000) {
-    console.warn('Some games already exist (duplicate key).');
+    console.warn('Some data already exists.');
   } else {
-    console.error('Error seeding games:', err);
+    console.error('Error seeding:', err);
     process.exit(1);
   }
 }
-// In order to use a user, link it using the user's ._id value, for example
-// const Token = await Token.create({user: james._id});
 
-// Make sure this is the last line of the file
+console.log("SEED FINISHED");
+
+// MUST BE LAST
 process.exit(0);
