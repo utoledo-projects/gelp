@@ -2,6 +2,7 @@ import {FC, PropsWithChildren} from "react";
 import getUser from "@/actions/getUser";
 import Redirect from "@/components/util/Redirect";
 import {cookies} from "next/headers";
+import UserContext from "@/context/UserContext";
 
 const AuthenticatedLayout: FC<PropsWithChildren> = async ({children}) => {
   const cookieStore = await cookies();
@@ -13,9 +14,18 @@ const AuthenticatedLayout: FC<PropsWithChildren> = async ({children}) => {
   if (user === null)
     return <Redirect to={'/auth/refresh'} appendRedirect />
 
-  return <>
+  return <UserContext value={{
+    _id: user._id.toString(),
+    username: user.username,
+    email: user.email,
+    emailVerified: user.emailVerified,
+    avatar: user.avatar,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+    isAdministrator: user.isAdministrator
+  }}>
     {children}
-  </>
+  </UserContext>
 }
 
 export default AuthenticatedLayout;
