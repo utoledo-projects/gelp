@@ -1,12 +1,11 @@
 "use client";
-
 import { useState } from "react";
 
 type Props = {
   onChange?: (rating: number) => void;
 };
 
-export default function RatingStars({ onChange }: Props) {
+export default function RatingStarsInput({ onChange }: Props) {
   const [rating, setRating] = useState(0);
 
   const handleClick = (value: number) => {

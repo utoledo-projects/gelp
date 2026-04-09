@@ -1,4 +1,4 @@
-import { IUser } from "../../db/model/User"
+import { IUser } from "@/db"
 import Link from "next/link"
 import { Star } from 'lucide-react';
 
@@ -16,7 +16,7 @@ export default function FeedReviewPost({
   score
 }: FeedReviewPostProps) {
   const avatarSrc = user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=6366f1&color=fff`
-  
+
   const displayRating = score / 2;
 
   return (
@@ -45,18 +45,18 @@ export default function FeedReviewPost({
             <div className="flex items-center gap-0.5">
               {Array.from({ length: 5 }, (_, i) => {
                 const starNumber = i + 1;
-                
+
                 if (starNumber <= Math.floor(displayRating)) {
                   return <Star key={i} size={14} className="fill-current text-yellow-500" />;
                 }
-                
+
                 if (starNumber === Math.ceil(displayRating) && displayRating % 1 !== 0) {
                   const fillPercentage = (displayRating % 1) * 100;
                   return (
                     <span key={i} className="relative inline-block">
                       <Star size={14} className="text-yellow-500 fill-transparent opacity-30" />
-                      <span 
-                        className="absolute top-0 left-0 overflow-hidden" 
+                      <span
+                        className="absolute top-0 left-0 overflow-hidden"
                         style={{ width: `${fillPercentage}%` }}
                       >
                         <Star size={14} className="fill-current text-yellow-500" />
