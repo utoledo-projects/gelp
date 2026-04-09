@@ -22,6 +22,7 @@ export const DELETE = async (req: NextRequest) => {
         `G_ACCESS_TOKEN=; HttpOnly; Secure; Path=/; Max-Age=0`,
         `G_REFRESH_TOKEN=; HttpOnly; Secure; Path=/api/auth/refresh; Max-Age=0`,
         `G_REFRESH_TOKEN=; HttpOnly; Secure; Path=/api/auth/logout; Max-Age=0`,
+        `G_AUTHENTICATED=; HttpOnly; Secure; Path=/api/auth/logout; Max-Age=0`,
       ].join(',')
     }
   });

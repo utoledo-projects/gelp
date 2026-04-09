@@ -3,7 +3,7 @@
  */
 
 import { render, screen } from '@testing-library/react'
-import Page from '@/app/auth/register/page'
+import Page from '@/app/(unauthenticated)/auth/register/page'
 
 jest.mock('@/components/forms/RegisterForm', () => () => <div data-testid="register-form">Register Form</div>)
 
