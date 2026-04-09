@@ -82,7 +82,7 @@ const LoginForm: FC = () => {
     />
     <div className='flex gap-4 items-center pt-4'>
       <button disabled={!valid || loading} type='submit' className='bg-blue-500 hover:bg-blue-600 p-2 rounded-md disabled:opacity-80'>Login</button>
-      <span>Don't have an account? <Link href='/auth/register' className='text-blue-400 hover:text-blue-500 hover:underline'>Create one</Link>.</span>
+      <span>Don't have an account? <Link href='/src/app/(unauthenticated)/auth/register' className='text-blue-400 hover:text-blue-500 hover:underline'>Create one</Link>.</span>
     </div>
     {errorMessage.length > 0 && <p className='text-red-500'>{errorMessage}</p>}
   </form>
