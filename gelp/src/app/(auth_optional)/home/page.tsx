@@ -92,6 +92,7 @@ export default function SimpleDevPage() {
           {feed.map((post: any) => (
             <FeedPost
               key={post._id}
+              id={post.game}
               title={post.title}
               description={post.description}
               type={post.type}
