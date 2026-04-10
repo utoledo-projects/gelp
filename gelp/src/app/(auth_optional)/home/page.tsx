@@ -12,6 +12,7 @@ export default function SimpleDevPage() {
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activities, setActivities] = useState<any[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const isFetching = useRef(false);
   const limit = 100;
@@ -21,7 +22,8 @@ export default function SimpleDevPage() {
       const res = await fetch("/api/useractivity");
       if (!res.ok) throw new Error("Failed to fetch activity");
       const data = await res.json();
-      setActivities(data);
+      setActivities(data.activities || []);
+      setIsLoggedIn(data.isLoggedIn);
     } catch (err: any) {
       console.error("Activity Error:", err.message);
     }
@@ -115,26 +117,44 @@ export default function SimpleDevPage() {
 
           <div className="flex flex-col gap-4 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar">
             {activities.length > 0 ? (
-              activities.map((act: any) => {
-                if (act.type === "REVIEW") {
-                  return (
-                    <FeedReviewPost
-                      key={act._id}
-                      user={act.username}
-                      game={act.game.title}
-                      review={act.rating?.review || ""}
-                      score={act.rating?.score || 0}
-                    />
-                  );
-                }
-                return (
-                  <FeedFriendActivity
-                    key={act._id}
-                    user={act.username}
-                    game={act.game.title}
-                  />
-                );
-              })
+              <>
+                {activities.map((act: any) => {
+                  if (act.type === "REVIEW") {
+                    return (
+                      <FeedReviewPost
+                        key={act._id}
+                        user={act.username}
+                        game={act.game.title}
+                        review={act.rating?.review || ""}
+                        score={act.rating?.score || 0}
+                      />
+                    );
+                  }
+                  if (act.type === "ADD_TO_LIBRARY" && isLoggedIn) {
+                    return (
+                      <FeedFriendActivity
+                        key={act._id}
+                        user={act.username}
+                        game={act.game.title}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+                {!isLoggedIn && (
+                  <div className="bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl p-8 text-center mt-2 transition-colors hover:bg-zinc-900/60">
+                    <p className="text-zinc-400 text-sm mb-3">
+                      See the games your friends are adding
+                    </p>
+                    <a 
+                      href="auth/login" 
+                      className="text-indigo-400 text-sm font-bold hover:text-indigo-300 transition-colors"
+                    >
+                      Sign in to view activity
+                    </a>
+                  </div>
+                )}
+              </>
             ) : (
               <p className="text-zinc-500 text-sm italic">No recent activity.</p>
             )}
