@@ -8,7 +8,7 @@ import { useRef } from 'react';
 interface IGDBGame {
   id: number;
   name: string;
-  summary?: string;
+  summary: string;
   first_release_date?: number;
   cover?: { url: string };
   genres?: { name: string }[];
@@ -24,6 +24,7 @@ interface GameForm {
   coverArt: string;
   icon: string;
   igdbID: string;
+  summary: string;
 }
 
 type Mode = "igdb-search" | "igdb-top" | "manual";
@@ -46,11 +47,12 @@ function igdbToForm(g: IGDBGame): GameForm {
     coverArt: coverUrl,
     icon: coverUrl,
     igdbID: String(g.id),
+    summary: g.summary ?? "",
   };
 }
 
 function emptyForm(): GameForm {
-  return { title: "", developer: "", genre: "", releaseDate: "", coverArt: "", icon: "", igdbID: "" };
+  return { title: "", developer: "", genre: "", releaseDate: "", coverArt: "", icon: "", igdbID: "", summary: "" };
 }
 
 /* ─── Sub-components ─────────────────────────────────────── */
@@ -102,20 +104,32 @@ function GameCard({ game, onSelect }: { game: IGDBGame; onSelect: (g: IGDBGame) 
 }
 
 function FormField({
-  label, name, value, onChange, type = "text", placeholder, hint,
+  label, name, value, onChange, type = "text", placeholder, hint, multiline = false,
 }: {
   label: string; name: keyof GameForm; value: string;
   onChange: (name: keyof GameForm, val: string) => void;
-  type?: string; placeholder?: string; hint?: string;
+  type?: string; placeholder?: string; hint?: string; multiline?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-xs font-mono text-zinc-400 uppercase tracking-widest">{label}</label>
-      <input
-        type={type} value={value} onChange={(e) => onChange(name, e.target.value)}
-        placeholder={placeholder}
-        className="bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors font-mono"
-      />
+      {multiline ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(name, e.target.value)}
+          placeholder={placeholder}
+          rows={3}
+          className="bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors font-mono resize-none"
+        />
+      ) : (
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(name, e.target.value)}
+          placeholder={placeholder}
+          className="bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors font-mono"
+        />
+      )}
       {hint && <p className="text-zinc-600 text-xs">{hint}</p>}
     </div>
   );
@@ -388,6 +402,7 @@ export default function AdminImportPage() {
                 <FormField label="Title *" name="title" value={form.title} onChange={updateForm} placeholder="Game title" />
                 <FormField label="Developer *" name="developer" value={form.developer} onChange={updateForm} placeholder="Developer name" />
                 <FormField label="Genre(s)" name="genre" value={form.genre} onChange={updateForm} placeholder="Action, RPG, Strategy..." hint="Comma-separated list" />
+                <FormField label="Summary" name="summary" value={form.summary} onChange={updateForm} placeholder="Game summary..." multiline />
                 <FormField label="Release Date *" name="releaseDate" value={form.releaseDate} onChange={updateForm} type="date" />
                 <FormField label="Cover Art URL" name="coverArt" value={form.coverArt} onChange={updateForm} placeholder="https://..." />
                 <FormField label="Icon URL" name="icon" value={form.icon} onChange={updateForm} placeholder="https://..." hint="Defaults to cover art if left same" />

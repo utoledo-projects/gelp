@@ -14,10 +14,10 @@ export async function POST(req: NextRequest) {
   // End auth check
   try {
     const body = await req.json();
-    const { igdbID, title, genre, developer, releaseDate, coverArt, icon } = body;
+    const { igdbID, title, genre, developer, releaseDate, coverArt, icon, summary } = body;
 
-    if (!igdbID || !title) {
-      return NextResponse.json({ error: "Missing required fields: igdbId, name" }, { status: 400 });
+    if (!igdbID || !title || !summary) {
+      return NextResponse.json({ error: "Missing required fields: igdbId, name, summary" }, { status: 400 });
     }
 
     await ensureMongoose();
@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       dateAdded: new Date(),
       coverArt,
       icon,
+      summary,
     });
 
     return NextResponse.json(game, { status: 201 });
