@@ -39,13 +39,10 @@ const gameSchema = new mongoose.Schema<IGame>({
     },
     coverArt: {
         type: mongoose.Schema.Types.String,
-        unique: true,
-        sparse: true,
+        required: true,
     },
     icon: {
         type: mongoose.Schema.Types.String,
-        unique: true,
-        sparse: true,
         required: true,
     },
     igdbID: {
@@ -56,8 +53,6 @@ const gameSchema = new mongoose.Schema<IGame>({
     },
     summary: {
         type: mongoose.Schema.Types.String,
-        unique: true,
-        sparse: true,
         required: true,
     }
 });
