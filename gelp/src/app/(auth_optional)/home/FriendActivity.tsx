@@ -6,6 +6,7 @@ import FeedReviewPost from "@/components/feed/FeedReviewPost";
 import FeedFriendActivity from "@/components/feed/FeedFriendActivity";
 import {IUserActivity} from "@/db";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import Link from "next/link";
 
 const FETCH_LIMIT = 100;
 
@@ -62,6 +63,16 @@ const FriendActivity = () => {
     fetchActivities,
     user !== null
   );
+
+  if (user === null)
+    return <div className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 pl-8">
+      <h2 className="text-left font-bold text-lg mb-4 text-zinc-100">
+        Latest Reviews & Activity
+      </h2>
+      <div className="flex flex-col gap-4 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar">
+        <p className='text-zinc-500 text-sm'><Link className='underline' href='/auth/login'>Sign in</Link> to view friend activity.</p>
+      </div>
+    </div>
 
   if (error !== null) {
     return <div className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 pl-8">
