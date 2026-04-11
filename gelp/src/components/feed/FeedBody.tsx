@@ -2,7 +2,7 @@ import { Star } from 'lucide-react';
 
 type FeedBodyProps = {
   title: string
-  description: string
+  summary: string
   score: number
   reviewCount: number
   type?: "popular" | "release" | "update" | "recommendation"
@@ -10,7 +10,7 @@ type FeedBodyProps = {
 
 export default function FeedBody({
   title,
-  description,
+  summary,
   score,
   reviewCount,
   type
@@ -36,7 +36,7 @@ export default function FeedBody({
       </div>
 
       <p className="text-sm text-zinc-400 line-clamp-2 leading-snug min-h-10">
-        {description}
+        {summary}
       </p>
 
       <div className="flex items-center gap-2">
