@@ -70,7 +70,17 @@ const FriendActivity = () => {
         Latest Reviews & Activity
       </h2>
       <div className="flex flex-col gap-4 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar">
-        <p className='text-zinc-500 text-sm'><Link className='underline' href='/auth/login'>Sign in</Link> to view friend activity.</p>
+        <div className="bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl p-8 text-center mt-2 transition-colors hover:bg-zinc-900/60">
+          <p className="text-zinc-400 text-sm mb-3">
+            See the games your friends are adding
+          </p>
+          <Link
+            href="/auth/login"
+            className="text-indigo-400 text-sm font-bold hover:text-indigo-300 transition-colors"
+          >
+            Sign in to view activity
+          </Link>
+        </div>
       </div>
     </div>
 
@@ -116,19 +126,6 @@ const FriendActivity = () => {
             }
             return null;
           })}
-          {user === null && (
-            <div className="bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl p-8 text-center mt-2 transition-colors hover:bg-zinc-900/60">
-              <p className="text-zinc-400 text-sm mb-3">
-                See the games your friends are adding
-              </p>
-              <a
-                href="auth/login"
-                className="text-indigo-400 text-sm font-bold hover:text-indigo-300 transition-colors"
-              >
-                Sign in to view activity
-              </a>
-            </div>
-          )}
         </>
       ) : (
         <p className="text-zinc-500 text-sm italic">{loading ? 'Loading...' : 'No recent activity.'}</p>
