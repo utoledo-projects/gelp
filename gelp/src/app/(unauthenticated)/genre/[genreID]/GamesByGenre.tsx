@@ -46,6 +46,8 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
           return [...(prev ?? []), ...newGames];
         });
         skipRef.current += data.games.length;
+      } else {
+        setGames((prev) => [...(prev ?? [])]);
       }
 
       if (data.games.length < FETCH_LIMIT)
@@ -81,6 +83,7 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
         genre={genre}
       />
     ))}
+    {games !== null && games.length === 0 && <p>No games found.</p>}
     {error !== null && <p className='text-red-500'>{error}</p>}
     <div ref={bottomRef} className='min-h-1'>{loading ? 'Loading...' : null}</div>
   </div>
