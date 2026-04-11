@@ -35,7 +35,7 @@ export default function FeedBody({
         )}
       </div>
 
-      <p className="text-sm text-zinc-400 line-clamp-2 leading-snug min-h-[2.5rem]">
+      <p className="text-sm text-zinc-400 line-clamp-2 leading-snug min-h-10">
         {summary}
       </p>
 
@@ -43,18 +43,18 @@ export default function FeedBody({
         <div className="flex items-center gap-0.5">
           {Array.from({ length: 5 }, (_, i) => {
             const starNumber = i + 1;
-            
+
             if (starNumber <= Math.floor(displayRating)) {
               return <Star key={i} size={16} className="fill-current text-yellow-500" />;
             }
-            
+
             if (starNumber === Math.ceil(displayRating) && displayRating % 1 !== 0) {
               const fillPercentage = (displayRating % 1) * 100;
               return (
                 <span key={i} className="relative inline-block">
                   <Star size={16} className="text-yellow-500 fill-transparent opacity-30" />
-                  <span 
-                    className="absolute top-0 left-0 overflow-hidden" 
+                  <span
+                    className="absolute top-0 left-0 overflow-hidden"
                     style={{ width: `${fillPercentage}%` }}
                   >
                     <Star size={16} className="fill-current text-yellow-500" />
@@ -66,7 +66,7 @@ export default function FeedBody({
             return <Star key={i} size={16} className="text-yellow-500 fill-transparent opacity-30" />;
           })}
         </div>
-        
+
         <div className="flex items-center gap-1">
           <span className="text-sm font-bold text-white">
             {score.toFixed(1)}

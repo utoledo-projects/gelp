@@ -3,6 +3,7 @@ import CoverArt from "@/app/(auth_optional)/game/[gameID]/CoverArt";
 import GameInfo from "@/app/(auth_optional)/game/[gameID]/GameInfo";
 import GameRatings from "@/app/(auth_optional)/game/[gameID]/GameRatings";
 import GameInLibraryInfo from "@/app/(auth_optional)/game/[gameID]/GameInLibraryInfo";
+import mongoose from "mongoose";
 
 const getGame = async (gameID: string) => {
   try {
@@ -13,25 +14,29 @@ const getGame = async (gameID: string) => {
   }
 }
 
-const getRatings = async (gameID: string) => {
+const getRating = async (gameID: string): Promise<{sum: number, count: number} | null> => {
   try {
-    const count = await Rating.countDocuments({game: gameID});
-
-    const ratings: number = await Rating.aggregate([
+    const aggregate = await Rating.aggregate([
+      {
+        $match: {
+          game: new mongoose.Types.ObjectId(gameID)
+        }
+      },
       {
         $group: {
-          _id: null,
-          totalSum: {$sum: '$score'}
+          _id: '$game',
+          ratingSum: {$sum: '$score'},
+          ratingCount: {$sum: 1}
         }
       }
-    ]).exec().then((res) => {
-      if (res.length === 0)
-        return 0;
-      return res[0].totalSum
-    });
+    ]) as {ratingSum: number, ratingCount: number}[];
+
+    if (!aggregate[0])
+      throw null;
 
     return {
-      ratings, count
+      sum: aggregate[0].ratingSum,
+      count: aggregate[0].ratingCount
     }
   } catch (e) {
     console.error(e);
@@ -42,7 +47,7 @@ const getRatings = async (gameID: string) => {
 const Page = async ({params}: { params: Promise<{ gameID: string }> }) => {
   const {gameID} = await params;
   const game = await getGame(gameID);
-  const ratings = await getRatings(gameID);
+  const ratings = await getRating(gameID);
 
   if (game === null)
     return <main>
