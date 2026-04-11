@@ -35,7 +35,7 @@ const FriendActivity = () => {
 
       if (data.activities.length > 0) {
         setActivities((prev) => {
-          const newPosts = data.filter(
+          const newPosts = data.activities.filter(
             (post: IUserActivity & {_id: string}) => !(prev ?? []).some((existing) => existing._id === post._id)
           );
 

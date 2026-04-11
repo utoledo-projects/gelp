@@ -167,21 +167,21 @@ try {
   await ContentFeed.create([
     {
       title: `Exploring the Wilds of ${created[0].title}`,
-      description: `A deep dive into why ${created[0].developer}'s masterpiece changed the ${created[0].genre[0]} genre forever.`,
+      summary: created[0].summary,
       feedImage: created[0].coverArt,
       game: zelda._id,
       type: 'popular'
     },
     {
       title: `${created[1].title} Technical Patch Notes`,
-      description: `The team at ${created[1].developer} has released a stability update for the ${created[1].genre[1]} mode.`,
+      summary: created[1].summary,
       feedImage: created[1].coverArt,
       game: hollow._id,
       type: 'update'
     },
     {
       title: `${created[2].title} Anniversary Event`,
-      description: `Celebrate a decade of this iconic ${created[2].genre[0]} title with exclusive in-game community challenges.`,
+      summary: created[2].summary,
       feedImage: created[2].coverArt,
       game: stardew._id,
       type: 'release'

@@ -6,20 +6,20 @@ import getUser from "@/actions/getUser";
 
 export async function POST(req: NextRequest) {
   try {
-  // Begin Auth Check
-  const access = req.cookies.get('G_ACCESS_TOKEN');
-  const user = await getUser(access?.value);
-  if (user === null)
-    return new NextResponse(JSON.stringify({ error: 'Unauthorized.' }), { status: 401 });
-  if (!user.isAdministrator)
-    return new NextResponse(JSON.stringify({ error: 'Forbidden.' }), { status: 403 });
-  // End auth check
+    // Begin Auth Check
+    const access = req.cookies.get('G_ACCESS_TOKEN');
+    const user = await getUser(access?.value);
+    if (user === null)
+      return new NextResponse(JSON.stringify({ error: 'Unauthorized.' }), { status: 401 });
+    if (!user.isAdministrator)
+      return new NextResponse(JSON.stringify({ error: 'Forbidden.' }), { status: 403 });
+    // End auth check
     const body = await req.json();
-    const { title, description, imageUrl, gameId, postType } = body;
+    const { title, summary, imageUrl, gameId, postType } = body;
 
-    if (!description || !gameId) {
+    if (!gameId) {
       return NextResponse.json(
-        { error: "Missing required fields: description or gameId" },
+        { error: "Missing required field: gameId" },
         { status: 400 }
       );
     }
@@ -31,10 +31,11 @@ export async function POST(req: NextRequest) {
 
     const finalTitle = title?.trim() || targetGame.title;
     const finalImage = imageUrl?.trim() || targetGame.coverArt;
+    const finalSummary = summary?.trim() || targetGame.summary;
     
     const newPost = await ContentFeed.create({
       title: finalTitle,
-      description,
+      summary: finalSummary,
       feedImage: finalImage,
       game: gameId,
       type: postType || undefined,

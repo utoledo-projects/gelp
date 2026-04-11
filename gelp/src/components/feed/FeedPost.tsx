@@ -5,7 +5,7 @@ import FeedBody from "./FeedBody"
 type FeedPostProps = {
   id: string
   title: string
-  description: string
+  summary: string
   feedImage: string
   score: number
   reviewCount: number  
@@ -15,7 +15,7 @@ type FeedPostProps = {
 export default function FeedPost({
   id,
   title,
-  description,
+  summary,
   feedImage,
   score,
   reviewCount,
@@ -29,7 +29,7 @@ export default function FeedPost({
 
         <FeedBody
           title={title}
-          description={description}
+          summary={summary}
           score={score}
           reviewCount={reviewCount}
           type={type}

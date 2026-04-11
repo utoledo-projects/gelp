@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export interface IContentFeed {
     title: string;
-    description: string;
+    summary: string;
     feedImage?: string;
     game: mongoose.Types.ObjectId;
     type?: 'release' | 'update' | 'popular' | 'recommendation';
@@ -13,9 +13,9 @@ const contentFeedSchema = new mongoose.Schema<IContentFeed>({
         type: mongoose.Schema.Types.String,
         required: false
     },
-    description: {
+    summary: {
         type: mongoose.Schema.Types.String,
-        required: true
+        required: false
     },
     feedImage: {
         type: mongoose.Schema.Types.String,

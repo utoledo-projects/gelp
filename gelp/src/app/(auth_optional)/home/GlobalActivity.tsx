@@ -68,7 +68,7 @@ const GlobalActivity = () => {
         key={post._id}
         id={post.game}
         title={post.title}
-        description={post.description}
+        summary={post.summary}
         type={post.type}
         feedImage={post.feedImage}
         score={post.score}

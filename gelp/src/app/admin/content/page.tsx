@@ -95,12 +95,11 @@ export default function AdminContentPage() {
             <InputGroup name="imageUrl" label="Feed Image (URL)" placeholder="Optional Image URL..." />
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider text-zinc-500">Feed Description</label>
+              <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider text-zinc-500">Feed Summary</label>
               <textarea 
-                name="description"
-                required
+                name="summary"
                 className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm min-h-[120px] outline-none focus:border-indigo-400 text-white placeholder:text-zinc-600 transition-all" 
-                placeholder="Enter a brief summary for the feed card..."
+                placeholder="Optional summary for the feed card..."
               />
             </div>
 
