@@ -9,6 +9,7 @@ export interface IGame {
     coverArt: string;
     icon: string;
     igdbID: number,
+    summary: string,
 }
 
 const gameSchema = new mongoose.Schema<IGame>({
@@ -45,11 +46,19 @@ const gameSchema = new mongoose.Schema<IGame>({
         type: mongoose.Schema.Types.String,
         unique: true,
         sparse: true,
+        required: true,
     },
     igdbID: {
-        type:mongoose.Schema.Types.Number,
+        type: mongoose.Schema.Types.Number,
         unique: true,
         sparse: true,
+        required: true,
+    },
+    summary: {
+        type: mongoose.Schema.Types.String,
+        unique: true,
+        sparse: true,
+        required: true,
     }
 });
 

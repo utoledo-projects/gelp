@@ -97,6 +97,7 @@ const games = [
     coverArt: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.jpg',
     icon: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.jpg',
     igdbID: 7346,
+    summary: 'The Legend of Zelda: Breath of the Wild is the first 3D open-world game in the Zelda series. Link can travel anywhere and be equipped with weapons and armor found throughout the world to grant him various bonuses. Unlike many games in the series, Breath of the Wild does not impose a specific order in which quests or dungeons must be completed. While the game still has environmental obstacles such as weather effects, inhospitable lands, or powerful enemies, many of them can be overcome using the right method. A lot of critics ranked Breath of the Wild as one of the best video games of all time.'
   },
   {
     title: 'Hollow Knight',
@@ -107,6 +108,7 @@ const games = [
     coverArt: 'https://images.igdb.com/igdb/image/upload/t_cover_big/cobfzp.jpg',
     icon: 'https://images.igdb.com/igdb/image/upload/t_cover_big/cobfzp.jpg',
     igdbID: 14593,
+    summary: 'A 2D metroidvania with an emphasis on close combat and exploration in which the player enters the once-prosperous now-bleak insect kingdom of Hallownest, travels through its various districts, meets friendly inhabitants, fights hostile ones and uncovers the kingdom’s history while improving their combat abilities and movement arsenal by fighting bosses and accessing out-of-the-way areas.'
   },
   {
     title: 'Stardew Valley',
@@ -117,6 +119,7 @@ const games = [
     coverArt: 'https://images.igdb.com/igdb/image/upload/t_cover_big/coa93h.jpg',
     icon: 'https://images.igdb.com/igdb/image/upload/t_cover_big/coa93h.jpg',
     igdbID: 17000,
+    summary: 'Stardew Valley is an open-ended country-life RPG! You’ve inherited your grandfather’s old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? It won’t be easy. Ever since Joja Corporation came to town, the old ways of life have all but disappeared. The community center, once the town’s most vibrant hub of activity, now lies in shambles. But the valley seems full of opportunity. With a little dedication, you might just be the one to restore Stardew Valley to greatness!'
   },
 ];
 
