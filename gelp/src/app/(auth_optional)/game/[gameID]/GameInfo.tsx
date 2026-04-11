@@ -15,7 +15,7 @@ const GameInfo: FC<GameInfoProps> = ({game}) => {
     <div><span className='font-bold'>Genres:</span></div>
     <div className='flex flex-wrap gap-2'>
       {game.genre.map((genre) => (
-        <GenreTag genre={genre} key={genre}/>
+        <GenreTag genre={genre} key={genre} link={true}/>
       ))}
     </div>
   </div>;
