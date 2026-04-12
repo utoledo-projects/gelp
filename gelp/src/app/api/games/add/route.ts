@@ -1,46 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-import { ensureMongoose } from "@/db/mongoose";
-import { Game } from "@/db/model/Game"; // adjust to your actual model path
-import getUser from "@/actions/getUser";
+import { NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  // Begin Auth Check
-  const access = req.cookies.get('G_ACCESS_TOKEN');
-  const user = await getUser(access?.value);
-  if (user === null)
-    return new NextResponse(JSON.stringify({ error: 'Unauthorized.' }), { status: 401 });
-  if (!user.isAdministrator)
-    return new NextResponse(JSON.stringify({ error: 'Forbidden.' }), { status: 403 });
-  // End auth check
-  try {
-    const body = await req.json();
-    const { igdbID, title, genre, developer, releaseDate, coverArt, icon } = body;
+export async function POST(req: Request) {
+  const body = await req.json();
+  const { rating, gameID } = body;
 
-    if (!igdbID || !title) {
-      return NextResponse.json({ error: "Missing required fields: igdbId, name" }, { status: 400 });
-    }
+  console.log("Rating:", rating);
+  console.log("GameID:", gameID);
 
-    await ensureMongoose();
-
-    const existing = await Game.findOne({ igdbID });
-    if (existing) {
-      return NextResponse.json({ error: "Game already exists" }, { status: 409 });
-    }
-
-    const game = await Game.create({
-      igdbID,
-      title,
-      genre,
-      developer,
-      releaseDate: new Date(releaseDate),
-      dateAdded: new Date(),
-      coverArt,
-      icon,
-    });
-
-    return NextResponse.json(game, { status: 201 });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+  // ✅ FIXED condition
+  if (rating === undefined || !gameID) {
+    return new Response("Missing data", { status: 400 });
   }
+
+  return NextResponse.json({
+    message: "Success",
+    rating,
+    gameID,
+  });
 }

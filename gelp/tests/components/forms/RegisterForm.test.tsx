@@ -50,6 +50,11 @@ describe('RegisterForm', () => {
   })
 
   it('submits valid registration and redirects to login', async () => {
+      it('renders register button', () => {
+    render(<RegisterForm />)
+
+    expect(screen.getByRole('button', { name: 'Register' })).toBeInTheDocument()
+  })
     fetchMock.mockResolvedValue({ status: 201 } as Response)
     render(<RegisterForm />)
 
