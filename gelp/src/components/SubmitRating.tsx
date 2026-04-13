@@ -50,12 +50,12 @@ export default function SubmitRating({ gameID }: { gameID?: string }) {
               width: "300px",
             }}
           >
-            <h2>Rate this Game</h2>
+            <h2>Rate this Game (1-10)</h2>
 
             <input
               type="number"
               min="1"
-              max="5"
+              max="10"
               value={rating || ""}
               onChange={(e) => setRating(Number(e.target.value))}
             />
