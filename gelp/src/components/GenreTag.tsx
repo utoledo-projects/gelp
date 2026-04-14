@@ -11,7 +11,7 @@ type GenreTagProps = {
 const hash = (str: string) => {
   let h = 2;
   for (let i = 0; i < str.length; i++) {
-    h *= str.charCodeAt(i) * 23;
+    h *= str.charCodeAt(i) * 25;
     h += str.charCodeAt(i);
     h %= 360;
   }
