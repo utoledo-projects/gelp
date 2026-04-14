@@ -57,10 +57,11 @@ const GlobalActivity = () => {
     wrapperRef,
     bottomRef,
     loadingRef,
-    fetchFeed
+    fetchFeed,
+    !loadingRef.current
   );
 
-  return <div ref={wrapperRef} className="flex-1 flex flex-wrap gap-6">
+  return <div ref={wrapperRef} className="flex-1 flex flex-wrap gap-6 h-full overflow-y-auto p-6">
     {error && <p className="text-red-500 w-full">{error}</p>}
 
     {feed !== null && feed.map((post: any) => (
@@ -79,7 +80,7 @@ const GlobalActivity = () => {
     {loading && (
       <p className="text-gray-400 w-full text-center py-10">Loading...</p>
     )}
-    <div ref={bottomRef} className='min-h-1'/>
+    <div ref={bottomRef} className='min-h-1 min-w-1'/>
   </div>
 }
 

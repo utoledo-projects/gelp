@@ -71,7 +71,7 @@ const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
     console.log(games);
   }, [games]);
 
-  return <div ref={wrapperRef}>
+  return <div ref={wrapperRef} className='flex gap-4 flex-wrap'>
     {games !== null && games.map((game) => (
       <GameDisplay
         key={game._id}

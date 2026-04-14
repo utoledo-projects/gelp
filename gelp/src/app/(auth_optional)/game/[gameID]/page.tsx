@@ -31,8 +31,12 @@ const getRating = async (gameID: string): Promise<{sum: number, count: number} |
       }
     ]) as {ratingSum: number, ratingCount: number}[];
 
-    if (!aggregate[0])
-      throw null;
+    if (!aggregate[0]) {
+      return {
+        sum:0,
+        count: 0
+      }
+    }
 
     return {
       sum: aggregate[0].ratingSum,

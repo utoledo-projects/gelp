@@ -95,7 +95,7 @@ const FriendActivity = () => {
     </div>
   }
 
-  return <div ref={wrapperRef} className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 pl-8">
+  return <div ref={wrapperRef} className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 p-6 h-full">
     <h2 className="text-left font-bold text-lg mb-4 text-zinc-100">
       Latest Reviews & Activity
     </h2>

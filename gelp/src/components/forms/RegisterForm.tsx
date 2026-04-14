@@ -86,7 +86,7 @@ const RegisterForm: FC = () => {
         setErrorMessage('An unknown error occurred. Please try again later.');
       }).finally(() => {
         setLoading(false);
-      })
+      });
   }
 
   return <form className='bg-neutral-900 p-4 rounded-xl flex flex-col gap-2' onSubmit={submit}>
@@ -163,7 +163,7 @@ const RegisterForm: FC = () => {
       >
         Register
       </button>
-      <span>Already have an account? <Link href='/src/app/(unauthenticated)/auth/login' className='text-blue-400 hover:text-blue-500 hover:underline'>Log in</Link>.</span>
+      <span>Already have an account? <Link href='/auth/login' className='text-blue-400 hover:text-blue-500 hover:underline'>Log in</Link>.</span>
     </div>
     {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
   </form>
