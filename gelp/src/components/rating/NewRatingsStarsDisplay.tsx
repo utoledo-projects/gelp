@@ -4,9 +4,10 @@ import {Star} from "lucide-react";
 type NewRatingsStarsDisplayProps = {
   sum: number;
   count: number;
+  singleRating?: boolean;
 }
 
-const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count}) => {
+const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, singleRating}) => {
   const stars = useMemo(() => {
     const value = Number((sum / count).toFixed(1));
     const stars: number[] = Array.from({length: 10});
@@ -40,9 +41,9 @@ const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count}) =
         </div>
       ))}
     </div>
-    <p>
+    {!singleRating && <p>
       {(sum / count).toFixed(1)} based on {count} rating{count === 1 ? '' : 's'}
-    </p>
+    </p>}
   </div>;
 }
 

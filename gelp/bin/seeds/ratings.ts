@@ -60,8 +60,8 @@ const selectPositiveReviewText = () => {
 
 for (const user of users) {
   // Select 40-50 games
-  const negative = Math.floor(Math.random() * 5) + 5;
-  const positive = Math.floor(Math.random() * 10) + 30;
+  const negative = Math.floor(Math.random() * 5) + 5; // 5-9 negative reviews
+  const positive = Math.floor(Math.random() * 10) + 30; // 30-39 positive reviews
   const selected = _.sampleSize(games, positive + negative);
 
   for (let i = 0; i < negative; i++) {
@@ -72,7 +72,7 @@ for (const user of users) {
       await Rating.create({
         user: user._id,
         game: selected[i]._id,
-        score: Math.floor(Math.random() * 5),
+        score: Math.floor(Math.random() * 4) + 1, // between 1 and 5
         review: text
       });
     } catch {
@@ -88,7 +88,7 @@ for (const user of users) {
       await Rating.create({
         user: user._id,
         game: selected[i]._id,
-        score: Math.floor(Math.random() * 5) + 5,
+        score: Math.floor(Math.random() * 6) + 5, // between 5 and 10
         review: text
       });
     } catch {

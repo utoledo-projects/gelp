@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 
 interface IGameRating {
-  ratings: number;
+  sum: number;
   count: number;
 }
 
@@ -19,13 +19,13 @@ const useGameRatings = (gameID: string) => {
 
     setLoading(true);
 
-    fetch(`/api/game/${gameID}/ratings`)
+    fetch(`/api/game/${gameID}/ratings/overview`)
       .then(async (res) => {
         const json = await res.json();
 
         if (res.status === 200) {
           setGameRatings({
-            ratings: json.ratings,
+            sum: json.sum,
             count: json.count
           });
         } else {
