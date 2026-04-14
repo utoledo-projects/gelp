@@ -87,16 +87,9 @@ export default function Navbar({ user }: { user: User | null }) {
               </div>
             ) : (
               <div className="flex items-center relative">
-                <Link 
-                  href={`/auth/login?redirect=${pathname}`} 
-                  className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center cursor-pointer hover:border-zinc-500 transition-colors shrink-0"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-                  </svg>
-                </Link>
+                <div className="w-8 h-8 shrink-0" />
 
-                <div className="absolute left-11 whitespace-nowrap">
+                <div className="absolute left-1 whitespace-nowrap">
                   <Link 
                     href={`/auth/login?redirect=${pathname}`} 
                     className="text-[10px] text-zinc-400 hover:text-indigo-400 transition-all uppercase tracking-widest font-medium border-b border-transparent hover:border-indigo-400/30 pb-0.5"
