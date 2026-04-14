@@ -21,6 +21,12 @@ const hash = (str: string) => {
 const toTitleCase = (str: string) => {
   if (str === 'rpg')
     return 'RPG';
+  if (str === 'role-playing (rpg)')
+    return 'RPG';
+  if (str === 'real time strategy (rts)')
+    return 'RTS';
+  if (str === 'turn-based strategy (tbs)')
+    return 'TBS';
 
   return str
     .toLowerCase()

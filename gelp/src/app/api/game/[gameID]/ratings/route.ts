@@ -1,35 +1,27 @@
 import {NextRequest} from "next/server";
-import {isValidObjectId} from "mongoose";
 
-export const GET = async (req: NextRequest, {params}: {params: Promise<{gameID: string}>}) => {
+export const GET = async (req: NextRequest, {params}: { params: Promise<{ gameID: string }> }) => {
   const {gameID} = await params;
 
-  if (!isValidObjectId(gameID))
-    return new Response(JSON.stringify({error: 'Invalid game ID.'}), {status: 400});
+  const url = new URL(req.url);
+  const skip: number = Number(url.searchParams.get('skip') ?? 0);
+  const limit: number = Number(url.searchParams.get('limit') ?? 100);
 
-  const game = await Game.findById(gameID).exec();
-  if (game === null)
-    return new Response(JSON.stringify({error: 'Game not found.'}), {status: 404});
+  if (isNaN(skip) || isNaN(limit) || skip < 0 || limit <= 0)
+    return new Response(JSON.stringify({error: 'Invalid skip or limit parameter.'}), {status: 400});
 
-  const count = await Rating.countDocuments({game: game._id});
-
-  const ratings: number = await Rating.aggregate([
-    {
-      $group: {
-        _id: null,
-        totalSum: {$sum: '$score'}
-      }
-    }
-  ]).then((res) => {
-    console.log(res);
-    if (res.length === 0)
-      return 0;
-    return res[0].totalSum
-  });
+  const ratings = await Rating
+    .find({
+      game: gameID
+    })
+    .skip(skip)
+    .limit(limit)
+    .populate('user', '_id username avatar')
+    .exec();
 
   return new Response(JSON.stringify({
-    message: 'Ratings pulled.',
-    count,
+    message: 'success.',
     ratings
-  }));
+  }), {status: 200});
 }
+

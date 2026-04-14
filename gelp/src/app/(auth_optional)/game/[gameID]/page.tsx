@@ -4,6 +4,7 @@ import GameInfo from "@/app/(auth_optional)/game/[gameID]/GameInfo";
 import GameRatings from "@/app/(auth_optional)/game/[gameID]/GameRatings";
 import GameInLibraryInfo from "@/app/(auth_optional)/game/[gameID]/GameInLibraryInfo";
 import mongoose from "mongoose";
+import GameRatingList from "@/app/(auth_optional)/game/[gameID]/GameRatingList";
 
 const getGame = async (gameID: string) => {
   try {
@@ -76,6 +77,7 @@ const Page = async ({params}: { params: Promise<{ gameID: string }> }) => {
         <GameRatings ratings={ratings}/>
       </div>
     </div>
+    <GameRatingList gameID={gameID}/>
   </main>
 }
 
