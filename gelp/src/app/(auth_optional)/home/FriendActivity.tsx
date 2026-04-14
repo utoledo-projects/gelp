@@ -85,7 +85,7 @@ const FriendActivity = () => {
     </div>
   }
 
-  return <div ref={wrapperRef} className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 pl-8">
+  return <div ref={wrapperRef} className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 p-6 h-full">
     <h2 className="text-left font-bold text-lg mb-4 text-zinc-100">
       Latest Reviews & Activity
     </h2>
@@ -116,19 +116,6 @@ const FriendActivity = () => {
             }
             return null;
           })}
-          {user === null && (
-            <div className="bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl p-8 text-center mt-2 transition-colors hover:bg-zinc-900/60">
-              <p className="text-zinc-400 text-sm mb-3">
-                See the games your friends are adding
-              </p>
-              <a
-                href="auth/login"
-                className="text-indigo-400 text-sm font-bold hover:text-indigo-300 transition-colors"
-              >
-                Sign in to view activity
-              </a>
-            </div>
-          )}
         </>
       ) : (
         <p className="text-zinc-500 text-sm italic">{loading ? 'Loading...' : 'No recent activity.'}</p>
