@@ -11,7 +11,7 @@ type RatingModalProps = {
   set: (rating: IRating & {_id: string}) => void;
 };
 
-export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
+const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
   const [rating, setRating] = useState(edit?.score ?? 0);
   const [text, setText] = useState(edit?.review ?? '');
   const [error, setError] = useState<string | null>(null);

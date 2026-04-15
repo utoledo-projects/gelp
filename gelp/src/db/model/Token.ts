@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import {randomBytes} from "node:crypto";
 
-export interface IToken {
+interface IToken {
   user: mongoose.Types.ObjectId;
   type: 'access' | 'refresh';
   token: string;
