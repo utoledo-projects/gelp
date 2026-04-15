@@ -1,10 +1,8 @@
 "use client";
 
-import {useRouter} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
 
 const Logout = () => {
-  const router = useRouter();
   const [error, setError] = useState<string>('');
 
   const logout = useCallback(() => {
@@ -18,6 +16,7 @@ const Logout = () => {
     logout()
       .then(async (res) => {
         if (res.status === 200) {
+          console.log('logged out');
           window.location.replace('/');
         } else {
           const json = await res.json();
