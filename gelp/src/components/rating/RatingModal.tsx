@@ -2,7 +2,7 @@
 
 import {FC, FormEventHandler, useCallback, useRef, useState} from "react";
 import {IGame, IRating} from "@/db";
-import NewRatingStarPicker from "@/components/rating/NewRatingStarPicker";
+import RatingStarInput from "@/components/rating/RatingStarInput";
 
 type RatingModalProps = {
   game: IGame & { _id: string };
@@ -66,7 +66,7 @@ export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
 
           <div className='flex flex-col gap-2'>
             <span>Rating Score:</span>
-            <NewRatingStarPicker value={rating} setValue={setRating}/>
+            <RatingStarInput value={rating} setValue={setRating}/>
           </div>
 
           <div className='flex flex-col gap-2'>

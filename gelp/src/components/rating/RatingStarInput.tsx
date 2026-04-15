@@ -6,7 +6,7 @@ type NewRatingStarPickerProps = {
   setValue: Dispatch<SetStateAction<number>>
 }
 
-const NewRatingStarPicker: FC<NewRatingStarPickerProps> = ({value, setValue}) => {
+const RatingStarInput: FC<NewRatingStarPickerProps> = ({value, setValue}) => {
   const setter = (rating: number) => {
     return () => {
       setValue(rating);
@@ -27,4 +27,4 @@ const NewRatingStarPicker: FC<NewRatingStarPickerProps> = ({value, setValue}) =>
   </div>
 }
 
-export default NewRatingStarPicker;
+export default RatingStarInput;

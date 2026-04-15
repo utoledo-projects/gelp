@@ -3,8 +3,8 @@
 import {FC, useEffect, useRef, useState} from "react";
 import useUser from "@/hooks/useUser";
 import Link from "next/link";
-import NewRatingsStarsDisplay from "@/components/rating/NewRatingsStarsDisplay";
-import RatingModal from "@/components/RatingModal";
+import RatingStarDisplay from "@/components/rating/RatingStarDisplay";
+import RatingModal from "@/components/rating/RatingModal";
 import {IGame, IRating} from "@/db";
 
 type GameRatingsProps = {
@@ -65,7 +65,7 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, game}) => {
           first to rate this game!</button>}
     </>}
     {ratings.count > 0 && <>
-      <NewRatingsStarsDisplay sum={ratings.sum} count={ratings.count}/>
+      <RatingStarDisplay sum={ratings.sum} count={ratings.count}/>
       {user === null && <p><Link href='/auth/login'>Sign in</Link> to rate this game.</p>}
       {user !== null && !existing &&
         <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2' onClick={() => setShowModal(true)}>
@@ -79,7 +79,7 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, game}) => {
         <div className='flex flex-col gap-2'>
           <span className='text-xl'>Your Rating:</span>
           <div className='flex items-center'>
-            <NewRatingsStarsDisplay sum={existing.score} count={1} singleRating/>
+            <RatingStarDisplay sum={existing.score} count={1} singleRating/>
             <span className='text-zinc-500 ml-2'>({existing.score})</span>
           </div>
           {existing.review && <span>{existing.review}</span>}
