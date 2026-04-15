@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
 
 export interface IUserActivity {
-  username: mongoose.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
   game: mongoose.Types.ObjectId;
   type: 'ADD_TO_LIBRARY' | 'REVIEW';
   rating?: mongoose.Types.ObjectId;
+  timestamp: Date;
 }
 
 const userActivitySchema = new mongoose.Schema<IUserActivity>({
-  username: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -27,6 +28,11 @@ const userActivitySchema = new mongoose.Schema<IUserActivity>({
   rating: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Rating",
+  },
+  timestamp: {
+    type: mongoose.Schema.Types.Date,
+    required: true,
+    default: () => new Date()
   }
 });
 

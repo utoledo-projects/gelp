@@ -3,7 +3,7 @@
  */
 
 import { render, screen } from '@testing-library/react'
-import Page from '@/app/(auth_optional)/auth/refresh/page'
+import Page from '@/app/auth/refresh/page'
 
 jest.mock('@/components/util/RefreshToken', () => () => <div data-testid="refresh-token">Refresh Token</div>)
 

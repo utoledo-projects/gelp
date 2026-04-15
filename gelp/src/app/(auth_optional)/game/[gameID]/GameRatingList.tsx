@@ -4,6 +4,7 @@ import {IRating} from "@/db";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import RatingStarDisplay from "@/components/rating/RatingStarDisplay";
 import useUser from "@/hooks/useUser";
+import Link from "next/link";
 
 type GameRatingListProps = {
   gameID: string;
@@ -127,7 +128,7 @@ const GameRatingList: FC<GameRatingListProps> = ({gameID, rating}) => {
     <div ref={wrapperRef} className='max-w-7xl mx-auto flex flex-wrap gap-4 p-2'>
       {updatedRatings.map((rating) => (
         <div key={rating._id} className='bg-zinc-900 p-3 rounded-xl flex flex-col gap-2 max-w-87.5'>
-          <span className='font-bold'>{rating.user.username}</span>
+          <Link href={`/user/${rating.user._id}`} className='font-bold hover:underline'>{rating.user.username}</Link>
           <RatingStarDisplay sum={rating.score} count={1} singleRating/>
           {rating.review ? <span>{rating.review}</span> :
             <span className='text-zinc-400'>This review doesn't have a body.</span>}

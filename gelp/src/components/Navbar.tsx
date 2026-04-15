@@ -4,25 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import DatabaseSearchBar from "./util/DatabaseSearchBar";
 import useUser from "@/hooks/useUser";
+import UserIcon from "@/components/UserIcon";
 
 export default function Navbar() {
   const user = useUser();
 
   const pathname = usePathname();
-
-  const getInitials = (name: string) => {
-    const parts = name.trim().split(/\s+/);
-    if (parts.length >= 2) {
-      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-    }
-    return parts[0][0].toUpperCase();
-  };
-
-  const initial = user?.username 
-    ? getInitials(user.username) 
-    : user?.email 
-      ? user.email[0].toUpperCase() 
-      : "?";
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black backdrop-blur-md">
@@ -65,12 +52,7 @@ export default function Navbar() {
             {user ? (
               <div className="flex items-center relative">
                 <Link className="flex items-center gap-3" href='/profile'>
-                  {user.avatar && <div className='w-8 h-8 cursor-pointer border border-zinc-700 hover:border-zinc-400 rounded-full transition-all shrink-0'>
-                    <img className='w-full h-full rounded-full' src={user.avatar} alt='user avatar'/>
-                  </div>}
-                  {!user.avatar && <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center cursor-pointer hover:border-zinc-400 transition-all text-zinc-100 font-bold text-[11px] uppercase shrink-0">
-                    {initial}
-                  </div>}
+                  <UserIcon user={user}/>
                 </Link>
                 
                 <div className="absolute left-11 flex items-center gap-5 whitespace-nowrap">

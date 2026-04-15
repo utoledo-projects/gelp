@@ -1,37 +1,28 @@
-import { IUser } from "../../db/model/User"
+import {IGame, IUser} from "@/db"
 import Link from "next/link"
+import UserIcon from "@/components/UserIcon";
 
 type FeedFriendActivityProps = {
-  user: IUser
-  game: string
+  user: IUser & {_id: string};
+  game: IGame & {_id: string};
 }
 
 export default function FeedFriendActivity({
-  user,
-  game
-}: FeedFriendActivityProps) {
-  const avatarSrc = user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=6366f1&color=fff`
-
+                                             user,
+                                             game
+                                           }: FeedFriendActivityProps) {
   return (
-    <Link href="/profile" className="block">
-      <div className="flex items-start gap-3 p-4 rounded-xl bg-zinc-900 border border-zinc-800/50 shadow-2xl hover:-translate-y-1 transition-all">
-
-        <img
-          src={avatarSrc}
-          alt={user.username}
-          className="w-12 h-12 rounded-full object-cover border border-zinc-700 bg-zinc-800"
-        />
-
-        <div className="flex flex-col justify-center min-h-[48px]">
-          <p className="text-sm text-white leading-snug">
-            <span className="text-indigo-400 font-bold">{user.username}</span>
-            <span className="text-zinc-500 mx-1">added</span>
-            <span className="text-emerald-400 font-bold">{game}</span>
-            <span className="text-zinc-500 ml-1">to their library</span>
-          </p>
-        </div>
-
+    <div
+      className="flex items-start gap-3 p-4 rounded-xl bg-zinc-900 border border-zinc-800/50 shadow-2xl">
+      <Link href={`/user/${user._id}`} className='cursor-pointer'><UserIcon user={user} size={48}/></Link>
+      <div className="flex flex-col justify-center min-h-12">
+        <p className="text-sm text-white leading-snug">
+          <Link href={`/user/${user._id}`}><span className="text-indigo-400 font-bold hover:underline">{user.username}</span></Link>
+          <span className="text-zinc-500 mx-1">added</span>
+          <Link href={`/game/${game._id}`}><span className="text-emerald-400 font-bold hover:underline">{game.title}</span></Link>
+          <span className="text-zinc-500 ml-1">to their library</span>
+        </p>
       </div>
-    </Link>
-  )
+    </div>
+  );
 }

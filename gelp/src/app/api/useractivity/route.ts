@@ -13,11 +13,12 @@ export async function GET(req: NextRequest) {
     const skip = Number(url.searchParams.get("skip")) || 0;
     const limit = Number(url.searchParams.get("limit")) || 20;
 
-    const activities = await UserActivity.find()
-      .sort({ _id: -1 })
+    const activities = await UserActivity
+      .find({user: {$in: user.following}})
+      .sort({ timestamp: -1 })
       .skip(skip)
       .limit(limit)
-      .populate("username")
+      .populate("user")
       .populate("game")
       .populate("rating");
 
