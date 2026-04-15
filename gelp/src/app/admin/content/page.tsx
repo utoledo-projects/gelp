@@ -42,7 +42,7 @@ export default function AdminContentPage() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white p-8 relative overflow-hidden">
+    <main className="min-h-screen bg-black text-white p-10 relative overflow-hidden">
       
       <div className={`fixed top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-in-out transform 
         ${status ? "translate-y-0 opacity-100" : "-translate-y-16 opacity-0 pointer-events-none"}`}>
@@ -59,12 +59,7 @@ export default function AdminContentPage() {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <header className="mb-10">
-          <h1 className="text-3xl font-black tracking-tight text-indigo-400 uppercase">ADMIN PANEL</h1>
-          <p className="text-zinc-500 font-medium">Create and manage global game feed posts.</p>
-        </header>
-
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-10 shadow-2xl relative">
           <div className="flex items-center gap-2 mb-8 text-indigo-400 border-b border-zinc-800 pb-4">
             <Gamepad2 size={20} />
             <span className="font-bold uppercase tracking-wider">New Game Post</span>
