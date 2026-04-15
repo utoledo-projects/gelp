@@ -5,12 +5,26 @@ export const POST = async (request: NextRequest) => {
   const refresh = request.cookies.get('G_REFRESH_TOKEN');
 
   if (refresh === undefined)
-    return new Response(JSON.stringify({error: 'Invalid refresh token.'}), {status: 401});
+    return new Response(JSON.stringify({error: 'Invalid refresh token.'}), {
+      status: 401,
+      headers: {
+        'Set-Cookie': [
+          `G_AUTHENTICATED=; HttpOnly; Path=/; Max-Age=0`
+        ].join(',')
+      }
+    });
 
   const refreshToken = await Token.findOne({token: refresh.value, type: 'refresh'}).exec();
 
   if (refreshToken === null || refreshToken.expiresAt < new Date())
-    return new Response(JSON.stringify({error: 'Invalid refresh token.'}), {status: 401});
+    return new Response(JSON.stringify({error: 'Invalid refresh token.'}), {
+      status: 401,
+      headers: {
+        'Set-Cookie': [
+          `G_AUTHENTICATED=; HttpOnly; Path=/; Max-Age=0`
+        ].join(',')
+      }
+    });
 
   // Generate new refresh tokens
   const newAccessToken = await Token.create({

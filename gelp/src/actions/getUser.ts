@@ -1,7 +1,7 @@
 import {IUser} from "@/db";
 import {Token} from "@/db/model/Token";
 
-const getUser = async (G_ACCESS_TOKEN?: string): Promise<null | Omit<IUser & {_id: string}, 'password' | 'createdAt' | 'updatedAt'>> => {
+const getUser = async (G_ACCESS_TOKEN?: string): Promise<null | Omit<IUser & {_id: string}, 'password' | 'createdAt' | 'updatedAt' | 'following'> & {following: string[]}> => {
   if (!G_ACCESS_TOKEN)
     return null;
 
@@ -21,6 +21,7 @@ const getUser = async (G_ACCESS_TOKEN?: string): Promise<null | Omit<IUser & {_i
     email: user.email,
     emailVerified: user.emailVerified,
     avatar: user.avatar,
+    following: user.following.map(f => f.toString()),
     isAdministrator: user.isAdministrator
   };
 }

@@ -3,6 +3,7 @@
 import {FC, useState} from "react";
 import useUser from "@/hooks/useUser";
 import ChangeAvatarModal from "@/components/user/ChangeAvatarModal";
+import UserIcon from "@/components/UserIcon";
 
 const PublicUserInfo: FC = () => {
   const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -17,7 +18,7 @@ const PublicUserInfo: FC = () => {
       <div className='flex flex-col gap-2 items-start'>
         <span className='font-bold'>Avatar:</span>
         <div className='flex gap-4 items-center'>
-          <img width={48} height={48} alt='user avatar' src={user.avatar}/>
+          <UserIcon user={user} size={48}/>
           <button className='bg-blue-700 hover:bg-blue-800 p-2 rounded-xl' onClick={() => setShowAvatarModal(true)}>Change
             Avatar
           </button>

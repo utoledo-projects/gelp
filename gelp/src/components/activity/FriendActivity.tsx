@@ -13,7 +13,8 @@ const FETCH_LIMIT = 100;
 const FriendActivity = () => {
   const user = useUser();
   const [activities, setActivities] = useState<(IUserActivity & {_id: string})[] | null>(null);
-  const [skip, setSkip] = useState(0);
+
+  const skipRef = useRef(0);
   const moreRef = useRef(true);
 
   const loadingRef = useRef(false);
@@ -24,13 +25,13 @@ const FriendActivity = () => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const fetchActivities = useCallback(async () => {
-    if (loadingRef.current || !moreRef) return;
+    if (loadingRef.current || !moreRef.current) return;
 
     loadingRef.current = true;
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/useractivity?skip=${skip}&limit=${FETCH_LIMIT}`);
+      const res = await fetch(`/api/useractivity?skip=${skipRef.current}&limit=${FETCH_LIMIT}`);
       if (!res.ok) throw new Error("Failed to fetch activity");
       const data = await res.json();
 
@@ -42,7 +43,7 @@ const FriendActivity = () => {
 
           return [...(prev ?? []), ...newPosts];
         });
-        setSkip((prev) => prev + data.activities.length);
+        skipRef.current += data.activities.length;
       }
 
       if (data.activities.length < FETCH_LIMIT) {
@@ -95,12 +96,12 @@ const FriendActivity = () => {
     </div>
   }
 
-  return <div ref={wrapperRef} className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 p-6 h-full">
+  return <div ref={wrapperRef} className="w-96 shrink-0 flex flex-col gap-4 border-l border-zinc-800/50 p-6 h-full overflow-y-auto custom-scrollbar">
     <h2 className="text-left font-bold text-lg mb-4 text-zinc-100">
       Latest Reviews & Activity
     </h2>
 
-    <div className="flex flex-col gap-4 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar">
+    <div className="flex flex-col gap-4 pr-2">
       {activities !== null && activities.length > 0 ? (
         <>
           {activities.map((act: any) => {
@@ -108,8 +109,8 @@ const FriendActivity = () => {
               return (
                 <FeedReviewPost
                   key={act._id}
-                  user={act.username}
-                  game={act.game.title}
+                  user={act.user}
+                  game={act.game}
                   review={act.rating?.review || ""}
                   score={act.rating?.score || 0}
                 />
@@ -119,8 +120,8 @@ const FriendActivity = () => {
               return (
                 <FeedFriendActivity
                   key={act._id}
-                  user={act.username}
-                  game={act.game.title}
+                  user={act.user}
+                  game={act.game}
                 />
               );
             }
@@ -131,7 +132,7 @@ const FriendActivity = () => {
         <p className="text-zinc-500 text-sm italic">{loading ? 'Loading...' : 'No recent activity.'}</p>
       )}
     </div>
-    <div ref={bottomRef} className='min-h-1'/>
+    <div ref={bottomRef} className='min-w-1 min-h-1'></div>
   </div>
 }
 

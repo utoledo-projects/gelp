@@ -9,6 +9,7 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   isAdministrator: boolean;
+  following: mongoose.Types.ObjectId[]
   library: mongoose.Types.ObjectId[];
 }
 
@@ -49,6 +50,12 @@ const userSchema = new mongoose.Schema<IUser>({
     required: true,
     default: false
   },
+  following: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    default: []
+  }],
   library: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Game'

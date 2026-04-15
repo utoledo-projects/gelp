@@ -76,9 +76,8 @@ export default function AdminContentPage() {
                 <select 
                   name="postType"
                   className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm outline-none focus:border-indigo-400 text-white cursor-pointer h-[46px] w-full"
-                  defaultValue=""
+                  defaultValue="popular"
                 >
-                  <option value="">None</option>
                   <option value="popular">Popular</option>
                   <option value="release">Release</option>
                   <option value="update">Update</option>

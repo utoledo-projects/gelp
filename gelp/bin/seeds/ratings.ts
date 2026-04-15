@@ -1,6 +1,7 @@
 import {users} from "./users";
 import {games} from './games';
 import _ from 'lodash';
+import {UserActivity} from "@/db";
 
 const negativeReviewTexts = [
   "This game had potential, but it feels unfinished and buggy.",
@@ -69,11 +70,25 @@ for (const user of users) {
     try {
       const hasText = Math.floor(Math.random() * 100) < 20; // 20% chance to have text
       const text = hasText ? selectNegativeReviewText() : undefined;
-      await Rating.create({
+      const rating = await Rating.create({
         user: user._id,
         game: selected[i]._id,
         score: Math.floor(Math.random() * 4) + 1, // between 1 and 5
         review: text
+      });
+      const ratingTime = Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000); // Random time within the last 7 days
+      await UserActivity.create({
+        type: 'ADD_TO_LIBRARY',
+        user: user._id,
+        game: selected[i]._id,
+        timestamp: new Date(Date.now() - ratingTime - Math.floor(Math.random() * 3 + 1) * 24 * 60 * 60 * 1000), // 1 - 3 days before rating
+      });
+      await UserActivity.create({
+        type: 'REVIEW',
+        user: user._id,
+        game: selected[i]._id,
+        rating: rating._id,
+        timestamp: new Date(Date.now() - ratingTime)
       });
     } catch {
       console.warn('[WARN] Failed to create a rating.');
@@ -85,11 +100,19 @@ for (const user of users) {
     try {
       const hasText = Math.floor(Math.random() * 100) < 20;
       const text = hasText ? selectPositiveReviewText() : undefined;
-      await Rating.create({
+      const rating = await Rating.create({
         user: user._id,
         game: selected[i]._id,
         score: Math.floor(Math.random() * 6) + 5, // between 5 and 10
         review: text
+      });
+      const ratingTime = Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000); // Random time within the last 7 days
+      await UserActivity.create({
+        type: 'REVIEW',
+        user: user._id,
+        game: selected[i]._id,
+        rating: rating._id,
+        timestamp: new Date(Date.now() - ratingTime)
       });
     } catch {
       console.warn('[WARN] Failed to create a rating.');

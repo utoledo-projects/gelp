@@ -1,9 +1,7 @@
 import RefreshToken from "@/components/util/RefreshToken";
 
 const Page = () => {
-  return <div>
-    <RefreshToken/>
-  </div>
+  return <RefreshToken/>
 }
 
 export default Page;

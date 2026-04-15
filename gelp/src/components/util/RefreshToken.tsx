@@ -8,6 +8,7 @@ const RefreshToken = () => {
   const params = useSearchParams();
 
   const refresh = useCallback(() => {
+    console.log('refreshing');
     return fetch('/api/auth/refresh', {
       method: 'POST',
       credentials: 'include'
@@ -37,7 +38,7 @@ const RefreshToken = () => {
       });
   }, [refresh]);
 
-  return null;
+  return <p>Refreshing...</p>;
 }
 
 export default RefreshToken;
