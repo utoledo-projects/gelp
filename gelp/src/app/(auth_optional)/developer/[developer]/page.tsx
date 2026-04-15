@@ -1,4 +1,4 @@
-import GamesByDeveloper from "@/app/(unauthenticated)/developer/[developer]/GamesByDeveloper";
+import GamesByDeveloper from "@/app/(auth_optional)/developer/[developer]/GamesByDeveloper";
 
 const DeveloperPage = async ({params}: {params: Promise<{developer: string}>}) => {
   let {developer} = await params;

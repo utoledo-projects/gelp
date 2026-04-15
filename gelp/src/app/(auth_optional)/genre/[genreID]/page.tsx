@@ -1,4 +1,4 @@
-import GamesByGenre from "@/app/(unauthenticated)/genre/[genreID]/GamesByGenre";
+import GamesByGenre from "@/app/(auth_optional)/genre/[genreID]/GamesByGenre";
 
 const GenrePage = async ({params}: { params: Promise<{genreID: string }>}) => {
   let {genreID} = await params;
