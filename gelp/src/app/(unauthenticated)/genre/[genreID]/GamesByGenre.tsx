@@ -1,6 +1,6 @@
 "use client";
 
-import {FC, useCallback, useEffect, useRef, useState} from "react";
+import {FC, useCallback, useRef, useState} from "react";
 import {IGame} from "@/db";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import GameDisplay from "@/components/GameDisplay";
@@ -66,10 +66,6 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
     loadingRef,
     fetchGames
   );
-
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
 
   return <div ref={wrapperRef} className='flex flex-wrap gap-4'>
     {games !== null && games.map((game) => (

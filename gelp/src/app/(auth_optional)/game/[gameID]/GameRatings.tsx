@@ -19,9 +19,8 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, gameID}) => {
 
   const user = useUser();
 
-  return <div>
+  return <div className='flex flex-col gap-2'>
     <h1 className='text-3xl'>Ratings</h1>
-    <br/>
     {ratings.count === 0 && <div className='flex flex-col gap-4'>
       <p>No ratings yet.</p>
       {user === null && <p><Link href='/auth/login'>Sign in</Link> to rate this game.</p>}

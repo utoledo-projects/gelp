@@ -38,9 +38,9 @@ const LoginForm: FC = () => {
         if (res.status === 200) {
           // Login successful, redirect
           if (searchParams.has('redirect')) {
-            router.push(searchParams.get('redirect')!);
+            window.location.replace(searchParams.get('redirect')!);
           } else {
-            router.push('/');
+            window.location.replace('/');
           }
         } else {
           // Login failed, show error

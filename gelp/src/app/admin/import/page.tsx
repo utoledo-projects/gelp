@@ -223,29 +223,7 @@ export default function AdminImportPage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white" style={{ fontFamily: "'Courier New', monospace" }}>
-      {/* Header */}
-      <div className="border-b border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-amber-500 text-xs font-mono tracking-widest uppercase">Gelp</span>
-              <span className="text-zinc-700">/</span>
-              <span className="text-zinc-400 text-xs font-mono tracking-widest uppercase">Admin</span>
-              <span className="text-zinc-700">/</span>
-              <span className="text-white text-xs font-mono tracking-widest uppercase">Game Import</span>
-            </div>
-            <h1 className="text-2xl font-bold mt-1 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
-              Game Database Management
-            </h1>
-          </div>
-          <div className="text-xs font-mono text-zinc-600 text-right">
-            <div className="text-amber-500/60">ADMIN PANEL</div>
-            <div>v0.1.0</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* ── Left: Source + Results ── */}
         <div className="flex flex-col gap-6">
           {/* Mode tabs */}
@@ -289,7 +267,7 @@ export default function AdminImportPage() {
                 </button>
               </div>
               {searching && (
-                <div className="text-center py-8 text-zinc-500 text-sm font-mono animate-pulse">Querying IGDB...</div>
+                <div className="text-center py-10 text-zinc-500 text-sm font-mono animate-pulse">Querying IGDB...</div>
               )}
               {searchResults.length > 0 && (
                 <div className="flex flex-col gap-2">
@@ -323,7 +301,7 @@ export default function AdminImportPage() {
                 </button>
               </div>
               {loadingTop && (
-                <div className="text-center py-8 text-zinc-500 text-sm font-mono animate-pulse">Fetching top games from IGDB...</div>
+                <div className="text-center py-10 text-zinc-500 text-sm font-mono animate-pulse">Fetching top games from IGDB...</div>
               )}
               {topResults.length > 0 && (
                 <div className="flex flex-col gap-2">

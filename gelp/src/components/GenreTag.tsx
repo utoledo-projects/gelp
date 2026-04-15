@@ -11,7 +11,7 @@ type GenreTagProps = {
 const hash = (str: string) => {
   let h = 2;
   for (let i = 0; i < str.length; i++) {
-    h *= str.charCodeAt(i) * 23;
+    h *= str.charCodeAt(i) * 25;
     h += str.charCodeAt(i);
     h %= 360;
   }
@@ -21,6 +21,12 @@ const hash = (str: string) => {
 const toTitleCase = (str: string) => {
   if (str === 'rpg')
     return 'RPG';
+  if (str === 'role-playing (rpg)')
+    return 'RPG';
+  if (str === 'real time strategy (rts)')
+    return 'RTS';
+  if (str === 'turn-based strategy (tbs)')
+    return 'TBS';
 
   return str
     .toLowerCase()
