@@ -58,7 +58,7 @@ export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
   }, [rating, game, text, close, set]);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black/80">
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black/80 z-10">
       <div className='w-full h-full flex items-center justify-center'>
         <form className="bg-zinc-900 p-6 rounded-xl w-96 flex flex-col gap-4">
 
