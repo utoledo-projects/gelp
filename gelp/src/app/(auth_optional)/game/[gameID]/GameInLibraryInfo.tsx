@@ -22,14 +22,11 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
 
     const checkLibraryStatus = async () => {
       try {
-        const res = await fetch(`/api/library?skip=0&limit=100`);
-        if (!res.ok) throw new Error("Failed to fetch library");
+        const res = await fetch(`/api/library/game/${gameID}`);
+        if (!res.ok) throw new Error("Failed to fetch library status");
         const data = await res.json();
         
-        const inLibrary = data.library.some((item: any) => 
-          item._id.toString() === gameID
-        );
-        setIsInLibrary(inLibrary);
+        setIsInLibrary(data.isInLibrary);
       } catch (err) {
         console.error("Error checking library status:", err);
         setIsInLibrary(false);
@@ -43,7 +40,7 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/library/add', {
+      const res = await fetch('/api/library', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ gameID })
@@ -66,8 +63,8 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/library/remove', {
-        method: 'POST',
+      const res = await fetch('/api/library', {
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ gameID })
       });

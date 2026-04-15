@@ -2,31 +2,31 @@ import { NextRequest, NextResponse } from "next/server";
 import { User } from "@/db";
 import getUser from "@/actions/getUser";
 
-export async function POST(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ gameID: string }> }
+) {
   try {
     const access = req.cookies.get('G_ACCESS_TOKEN');
     const user = await getUser(access?.value);
     if (user === null)
       return new NextResponse(JSON.stringify({error: 'Unauthorized.'}), {status: 401});
 
-    const body = await req.json();
-    const { gameID } = body;
+    const { gameID } = await params;
 
-    if (!gameID)
-      return new NextResponse(JSON.stringify({error: 'Missing gameID'}), {status: 400});
-
-    // Use $pull to remove game from library (atomic operation)
-    const updatedUser = await User.findByIdAndUpdate(
-      user._id,
-      { $pull: { library: gameID } },
-      { new: true }
-    ).exec();
-
-    if (!updatedUser)
+    // Fetch user with populated library to ensure we have the correct data
+    const userWithLibrary = await User.findById(user._id).select('library').exec();
+    
+    if (!userWithLibrary)
       return new NextResponse(JSON.stringify({error: 'User not found'}), {status: 404});
 
+    // Check if gameID is in user's library
+    const isInLibrary = userWithLibrary.library?.some((id: any) => 
+      id.toString() === gameID
+    ) || false;
+
     return NextResponse.json({
-      message: "Game removed from library successfully"
+      isInLibrary
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown error";
