@@ -2,6 +2,8 @@ import {cookies} from "next/headers";
 import getUser from "@/actions/getUser";
 import {FC, PropsWithChildren} from "react";
 import Redirect from "@/components/util/Redirect";
+import Navbar from "@/components/Navbar";
+import UserContext from "@/context/UserContext";
 
 const AdminLayout: FC<PropsWithChildren> = async ({children}) => {
   const cookieStore = await cookies();
@@ -16,9 +18,10 @@ const AdminLayout: FC<PropsWithChildren> = async ({children}) => {
   if (!user.isAdministrator)
     return <Redirect to={'/'}/>
 
-  return <>
+  return <UserContext value={user}>
+    <Navbar />
     {children}
-  </>
+  </UserContext>
 }
 
 export default AdminLayout;
