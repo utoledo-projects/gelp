@@ -68,7 +68,7 @@ const Page = async ({params}: { params: Promise<{ gameID: string }> }) => {
       <CoverArt game={game}/>
       <GameInfo game={game}/>
       <div className='flex-1 flex flex-col gap-16'>
-        <GameInLibraryInfo/>
+        <GameInLibraryInfo gameID={gameID}/>
         <GameRatings ratings={ratings}/>
       </div>
     </div>
