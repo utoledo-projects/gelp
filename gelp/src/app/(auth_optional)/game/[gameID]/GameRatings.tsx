@@ -13,14 +13,20 @@ type GameRatingsProps = {
     count: number;
   },
   game: IGame & { _id: string };
+  setRating?: (rating: IRating & {_id: string} | null) => void;
 }
 
-const GameRatings: FC<GameRatingsProps> = ({ratings, game}) => {
+const GameRatings: FC<GameRatingsProps> = ({ratings, game, setRating}) => {
   const [showModal, setShowModal] = useState(false);
   const loadingRef = useRef(false);
   const [loading, setLoading] = useState(false);
-  const [existing, setExisting] = useState<IRating | null>(null);
+  const [existing, setExisting] = useState<IRating & {_id: string} | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (setRating)
+      setRating(existing);
+  }, [existing]);
 
   useEffect(() => {
     if (loadingRef.current)

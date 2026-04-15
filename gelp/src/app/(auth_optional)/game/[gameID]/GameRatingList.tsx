@@ -1,25 +1,28 @@
 "use client";
-import {FC, useCallback, useRef, useState} from "react";
+import {FC, useCallback, useMemo, useRef, useState} from "react";
 import {IRating} from "@/db";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import RatingStarDisplay from "@/components/rating/RatingStarDisplay";
+import useUser from "@/hooks/useUser";
 
 type GameRatingListProps = {
   gameID: string;
+  rating: IRating & { _id: string } | null;
 }
 
 const FETCH_LIMIT = 100;
 
-type RatingWithUser = IRating & {
-  _id: string;
+type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U;
+type RatingWithUser = Overwrite<IRating & { _id: string }, {
   user: {
     _id: string;
     username: string;
     avatar?: string;
-  }
-}
+  };
+}>
 
-const GameRatingList: FC<GameRatingListProps> = ({gameID}) => {
+const GameRatingList: FC<GameRatingListProps> = ({gameID, rating}) => {
+  const user = useUser();
   const [ratings, setRatings] = useState<RatingWithUser[] | null>(null);
 
   const skipRef = useRef(0);
@@ -31,6 +34,35 @@ const GameRatingList: FC<GameRatingListProps> = ({gameID}) => {
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  const updatedRatings = useMemo(() => {
+    const updated = [...(ratings ?? [])];
+
+    if (user === null)
+      return updated;
+    if (rating === null)
+      return updated;
+
+    const i = updated.findIndex((r) => r._id === rating._id);
+
+    if (i === -1) {
+      return [...updated, {
+        ...rating,
+        user: {
+          _id: user._id,
+          username: user.username,
+          avatar: user.avatar
+        }
+      }];
+    }
+
+    updated[i] = {
+      ...rating,
+      user: updated[i].user
+    }
+
+    return updated;
+  }, [ratings, rating, user]);
 
   const fetchRatings = useCallback(async () => {
     if (loadingRef.current || !moreRef.current)
@@ -93,11 +125,12 @@ const GameRatingList: FC<GameRatingListProps> = ({gameID}) => {
       <h2 className='text-2xl'>All Ratings:</h2>
     </div>
     <div ref={wrapperRef} className='max-w-7xl mx-auto flex flex-wrap gap-4 p-2'>
-      {ratings?.map((rating) => (
+      {updatedRatings.map((rating) => (
         <div key={rating._id} className='bg-zinc-900 p-3 rounded-xl flex flex-col gap-2 max-w-87.5'>
           <span className='font-bold'>{rating.user.username}</span>
           <RatingStarDisplay sum={rating.score} count={1} singleRating/>
-          {rating.review ? <span>{rating.review}</span> : <span className='text-zinc-400'>This review doesn't have a body.</span>}
+          {rating.review ? <span>{rating.review}</span> :
+            <span className='text-zinc-400'>This review doesn't have a body.</span>}
         </div>
       ))}
       <div ref={bottomRef} className='min-w-1 min-h-1'/>

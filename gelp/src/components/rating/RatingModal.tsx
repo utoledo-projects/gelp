@@ -7,8 +7,8 @@ import RatingStarInput from "@/components/rating/RatingStarInput";
 type RatingModalProps = {
   game: IGame & { _id: string };
   close: () => void;
-  edit: IRating | null;
-  set: (rating: IRating) => void;
+  edit: IRating & {_id: string} | null;
+  set: (rating: IRating & {_id: string}) => void;
 };
 
 export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
