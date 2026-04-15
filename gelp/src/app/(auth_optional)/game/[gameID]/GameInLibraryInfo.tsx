@@ -14,7 +14,7 @@ const GameInLibraryInfo: FC = () => {
     </>}
     {user !== null && <>
       <p>This game is not in your library</p>
-      <button className='bg-blue-600 rounded-lg py-1 px-2'>Add it now!</button>
+      <button className='bg-blue-600 rounded-lg py-1 px-2 cursor-pointer'>Add it now!</button>
     </>}
   </div>;
 }

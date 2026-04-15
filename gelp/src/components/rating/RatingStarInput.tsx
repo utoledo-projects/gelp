@@ -18,7 +18,7 @@ const RatingStarInput: FC<NewRatingStarPickerProps> = ({value, setValue}) => {
       <div key={star}>
         <Star
           size={16}
-          className={star <= value ? 'text-yellow-500 fill-current' : 'text-gray-500 fill-current'}
+          className={star <= value ? 'text-yellow-500 fill-current cursor-pointer' : 'text-gray-500 fill-current cursor-pointer'}
           onClick={setter(star)}
         />
       </div>

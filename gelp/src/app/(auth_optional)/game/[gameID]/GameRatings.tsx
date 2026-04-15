@@ -13,14 +13,20 @@ type GameRatingsProps = {
     count: number;
   },
   game: IGame & { _id: string };
+  setRating?: (rating: IRating & {_id: string} | null) => void;
 }
 
-const GameRatings: FC<GameRatingsProps> = ({ratings, game}) => {
+const GameRatings: FC<GameRatingsProps> = ({ratings, game, setRating}) => {
   const [showModal, setShowModal] = useState(false);
   const loadingRef = useRef(false);
   const [loading, setLoading] = useState(false);
-  const [existing, setExisting] = useState<IRating | null>(null);
+  const [existing, setExisting] = useState<IRating & {_id: string} | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (setRating)
+      setRating(existing);
+  }, [existing]);
 
   useEffect(() => {
     if (loadingRef.current)
@@ -61,19 +67,19 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, game}) => {
       <p>No ratings yet.</p>
       {user === null && <p><Link href='/auth/login'>Sign in</Link> to rate this game.</p>}
       {user !== null &&
-        <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2' onClick={() => setShowModal(true)}>Be the
+        <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2 cursor-pointer disabled:cursor-default' onClick={() => setShowModal(true)}>Be the
           first to rate this game!</button>}
     </>}
     {ratings.count > 0 && <>
       <RatingStarDisplay sum={ratings.sum} count={ratings.count}/>
       {user === null && <p><Link href='/auth/login'>Sign in</Link> to rate this game.</p>}
       {user !== null && !existing &&
-        <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2' onClick={() => setShowModal(true)}>
+        <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2 cursor-pointer disabled:cursor-default' onClick={() => setShowModal(true)}>
           Rate this game
         </button>
       }
       {user !== null && existing && <>
-        <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2' onClick={() => setShowModal(true)}>
+        <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2 cursor-pointer disabled:cursor-default' onClick={() => setShowModal(true)}>
           Edit your rating
         </button>
         <div className='flex flex-col gap-2'>

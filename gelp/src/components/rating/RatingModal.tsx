@@ -7,8 +7,8 @@ import RatingStarInput from "@/components/rating/RatingStarInput";
 type RatingModalProps = {
   game: IGame & { _id: string };
   close: () => void;
-  edit: IRating | null;
-  set: (rating: IRating) => void;
+  edit: IRating & {_id: string} | null;
+  set: (rating: IRating & {_id: string}) => void;
 };
 
 export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
@@ -58,7 +58,7 @@ export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
   }, [rating, game, text, close, set]);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black/80">
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black/80 z-10">
       <div className='w-full h-full flex items-center justify-center'>
         <form className="bg-zinc-900 p-6 rounded-xl w-96 flex flex-col gap-4">
 
@@ -83,11 +83,11 @@ export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
           </div>
 
           <div className='flex gap-2'>
-            <button disabled={rating === 0 || loading || (edit !== null && edit.score === rating && (edit.review ?? '') === text)} onClick={submit}
-                    className='flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 p-1 rounded-lg'>
+            <button disabled={rating === 0 || loading || (!!edit && edit.score === rating && (edit.review ?? '') === text)} onClick={submit}
+                    className='flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 p-1 rounded-lg cursor-pointer disabled:cursor-default'>
               Submit
             </button>
-            <button disabled={loading} onClick={close} className="flex-1 bg-zinc-600 hover:bg-zinc-700 disabled:bg-zinc-600/50 p-1 rounded-lg">
+            <button disabled={loading} onClick={close} className="flex-1 bg-zinc-600 hover:bg-zinc-700 disabled:bg-zinc-600/50 p-1 rounded-lg cursor-pointer disabled:cursor-default">
               Close
             </button>
           </div>

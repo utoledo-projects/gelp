@@ -1,10 +1,6 @@
 import {Game} from "@/db";
-import CoverArt from "@/app/(auth_optional)/game/[gameID]/CoverArt";
-import GameInfo from "@/app/(auth_optional)/game/[gameID]/GameInfo";
-import GameRatings from "@/app/(auth_optional)/game/[gameID]/GameRatings";
-import GameInLibraryInfo from "@/app/(auth_optional)/game/[gameID]/GameInLibraryInfo";
 import mongoose from "mongoose";
-import GameRatingList from "@/app/(auth_optional)/game/[gameID]/GameRatingList";
+import PageClient from "@/app/(auth_optional)/game/[gameID]/page.client";
 
 const getGame = async (gameID: string) => {
   try {
@@ -69,18 +65,10 @@ const Page = async ({params}: { params: Promise<{ gameID: string }> }) => {
     </main>
 
   return <main className='min-h-screen bg-black text-white selection:bg-indigo-500/30 p-10'>
-    <div className='max-w-7xl bg-neutral-900 p-4 flex rounded-4xl mx-auto gap-8'>
-      <CoverArt game={game}/>
-      <GameInfo game={game}/>
-      <div className='flex-1 flex flex-col gap-16'>
-        <GameInLibraryInfo/>
-        <GameRatings ratings={ratings} game={{
-          ...game.toJSON(),
-          _id: game._id.toString()
-        }}/>
-      </div>
-    </div>
-    <GameRatingList gameID={gameID}/>
+    <PageClient game={{
+      ...game.toJSON(),
+      _id: game._id.toString()
+    }} ratings={ratings}/>
   </main>
 }
 
