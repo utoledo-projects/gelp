@@ -3,7 +3,7 @@ import {FC} from "react";
 import Link from "next/link";
 import mongoose from "mongoose";
 import GenreTag from "@/components/GenreTag";
-import NewRatingsStarsDisplay from "@/components/rating/NewRatingsStarsDisplay";
+import RatingStarDisplay from "@/components/rating/RatingStarDisplay";
 
 type GameDisplayProps = {
   game: IGame & {_id: string | mongoose.Types.ObjectId};
@@ -36,7 +36,7 @@ const GameDisplay: FC<GameDisplayProps> = ({game, genre, ratings}) => {
         <p className="text-sm text-zinc-400 line-clamp-2 leading-snug">
           {game.summary}
         </p>
-        <NewRatingsStarsDisplay sum={ratings.sum} count={ratings.count}/>
+        <RatingStarDisplay sum={ratings.sum} count={ratings.count}/>
       </div>
     </div>
   </Link>

@@ -7,23 +7,31 @@ type NewRatingsStarsDisplayProps = {
   singleRating?: boolean;
 }
 
-const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, singleRating}) => {
+const RatingStarDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, singleRating}) => {
   const stars = useMemo(() => {
     const value = Number((sum / count).toFixed(1));
-    const stars: number[] = Array.from({length: 10});
+    const stars: number[] = [];
 
     for (let i = 0; i < Math.floor(value); i++) {
-      stars[i] = 100;
+      stars.push(100);
     }
 
-    stars[Math.floor(value)] = Math.floor((value % 1) * 100);
+    if (Math.floor(value) < 10)
+      stars.push((value % 1) * 100);
 
     for (let i = Math.floor(value) + 1; i < 10; i++) {
-      stars[i] = 0;
+      stars.push(0);
     }
 
     return stars;
   }, [sum, count]);
+
+  if (count === 0)
+    return <div>
+      <p>
+        This game hasn't been rated yet.
+      </p>
+    </div>
 
   return <div className='flex flex-col gap-2'>
     <div className='flex gap-1 items-center justify-start'>
@@ -47,4 +55,4 @@ const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, si
   </div>;
 }
 
-export default NewRatingsStarsDisplay;
+export default RatingStarDisplay;

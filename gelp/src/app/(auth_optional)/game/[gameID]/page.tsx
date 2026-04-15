@@ -74,7 +74,10 @@ const Page = async ({params}: { params: Promise<{ gameID: string }> }) => {
       <GameInfo game={game}/>
       <div className='flex-1 flex flex-col gap-16'>
         <GameInLibraryInfo/>
-        <GameRatings ratings={ratings}/>
+        <GameRatings ratings={ratings} game={{
+          ...game.toJSON(),
+          _id: game._id.toString()
+        }}/>
       </div>
     </div>
     <GameRatingList gameID={gameID}/>
