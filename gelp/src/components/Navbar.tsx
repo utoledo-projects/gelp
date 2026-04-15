@@ -3,14 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import DatabaseSearchBar from "./util/DatabaseSearchBar";
+import useUser from "@/hooks/useUser";
 
-interface User {
-  username?: string;
-  email?: string;
-  isAdmin?: boolean;
-}
+export default function Navbar() {
+  const user = useUser();
 
-export default function Navbar({ user }: { user: User | null }) {
   const pathname = usePathname();
 
   const getInitials = (name: string) => {
@@ -47,7 +44,7 @@ export default function Navbar({ user }: { user: User | null }) {
 
         <div className="flex items-center gap-6 font-sans text-[11px] font-bold">
           
-          {user?.isAdmin && (
+          {user?.isAdministrator && (
             <div className="flex items-center gap-3">
               <Link 
                 href="/admin/content" 
@@ -67,11 +64,14 @@ export default function Navbar({ user }: { user: User | null }) {
           <div className="flex items-center gap-4 pl-6 border-l border-zinc-800 h-8">
             {user ? (
               <div className="flex items-center relative">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center cursor-pointer hover:border-zinc-400 transition-all text-zinc-100 font-bold text-[11px] uppercase shrink-0">
+                <Link className="flex items-center gap-3" href='/profile'>
+                  {user.avatar && <div className='w-8 h-8 cursor-pointer border border-zinc-700 hover:border-zinc-400 rounded-full transition-all shrink-0'>
+                    <img className='w-full h-full rounded-full' src={user.avatar} alt='user avatar'/>
+                  </div>}
+                  {!user.avatar && <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center cursor-pointer hover:border-zinc-400 transition-all text-zinc-100 font-bold text-[11px] uppercase shrink-0">
                     {initial}
-                  </div>
-                </div>
+                  </div>}
+                </Link>
                 
                 <div className="absolute left-11 flex items-center gap-5 whitespace-nowrap">
                   <span className="text-[10px] text-zinc-500 uppercase tracking-widest hidden sm:block">
@@ -79,7 +79,7 @@ export default function Navbar({ user }: { user: User | null }) {
                   </span>
                   <Link 
                     href="/auth/logout" 
-                    className="text-[10px] text-zinc-400 hover:text-red-400 transition-all uppercase tracking-widest font-medium border-b border-transparent hover:border-red-400/30 pb-0.5"
+                    className="text-[10px] text-zinc-400 hover:text-red-400 transition-all uppercase tracking-widest font-medium border-b border-transparent hover:border-red-400/30"
                   >
                     Logout
                   </Link>

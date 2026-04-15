@@ -25,19 +25,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const access = cookieStore.get('G_ACCESS_TOKEN');
-  const rawUser = access ? await getUser(access.value) : null;  
-  const user = rawUser ? {
-    username: rawUser.username,
-    email: rawUser.email,
-    isAdmin: rawUser.isAdministrator,
-  } : null;
-
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
-        <Navbar user={user} />
         {children}
       </body>
     </html>
