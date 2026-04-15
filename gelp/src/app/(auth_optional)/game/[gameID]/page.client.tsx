@@ -24,7 +24,7 @@ const PageClient: FC<PageClientProps> = ({game, ratings}) => {
       <CoverArt game={game}/>
       <GameInfo game={game}/>
       <div className='flex-1 flex flex-col gap-16'>
-        <GameInLibraryInfo/>
+        <GameInLibraryInfo gameID={game._id}/>
         <GameRatings ratings={ratings} game={game} setRating={setMyRating}/>
       </div>
     </div>
