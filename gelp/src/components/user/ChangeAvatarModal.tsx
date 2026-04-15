@@ -62,7 +62,7 @@ const ChangeAvatarModal: FC<ChangeAvatarModalProps> = ({show, close}) => {
   if (!show)
     return null;
 
-  return <div className='w-screen h-screen absolute top-0 left-0 bg-black opacity-80'>
+  return <div className='w-screen h-screen fixed top-0 left-0 bg-black/80'>
     <div className='w-full h-full flex items-center justify-center'>
       <form className='bg-zinc-900 p-4 rounded-2xl flex flex-col gap-4 min-w-75' onSubmit={submit}>
         <div className='flex gap-2 items-center'>
