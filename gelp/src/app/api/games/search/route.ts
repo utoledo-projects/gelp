@@ -14,12 +14,13 @@ export async function GET(request: NextRequest) {
       title: { $regex: query, $options: 'i' }
     })
     .limit(10)
-    .select('_id title')
+    .select('_id title coverArt')
     .lean();
 
     const result = games.map((game: any) => ({
       id: game._id.toString(),
       title: game.title,
+      coverArt: game.coverArt,
     }));
     
     return NextResponse.json(result);

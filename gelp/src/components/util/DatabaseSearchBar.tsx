@@ -6,6 +6,7 @@ import Link from 'next/link';
 interface GameResult {
   id: string;
   title: string;
+  coverArt: string;
 }
 
 export default function DatabaseSearchBar() {
@@ -13,6 +14,8 @@ export default function DatabaseSearchBar() {
   const [results, setResults] = useState<GameResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -27,10 +30,31 @@ export default function DatabaseSearchBar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Load images when results change
+  useEffect(() => {
+    const newLoadedImages = new Set(loadedImages);
+    const newFailedImages = new Set(failedImages);
+
+    results.forEach((game) => {
+      if (!loadedImages.has(game.id) && !failedImages.has(game.id)) {
+        const img = new Image();
+        img.onload = () => {
+          setLoadedImages((prev) => new Set(prev).add(game.id));
+        };
+        img.onerror = () => {
+          setFailedImages((prev) => new Set(prev).add(game.id));
+        };
+        img.src = game.coverArt;
+      }
+    });
+  }, [results]);
+
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
       setShowDropdown(false);
+      setLoadedImages(new Set());
+      setFailedImages(new Set());
       return;
     }
 
@@ -73,10 +97,23 @@ export default function DatabaseSearchBar() {
             <li key={game.id}>
               <Link
                 href={`/game/${game.id}`}
-                className="block px-4 py-2 text-sm text-neutral-200 hover:bg-neutral-800 transition-colors"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-neutral-200 hover:bg-neutral-800 transition-colors"
                 onClick={() => setShowDropdown(false)}
               >
-                {game.title}
+                {loadedImages.has(game.id) ? (
+                  <img
+                    src={game.coverArt}
+                    alt={`${game.title} cover`}
+                    className="w-12 h-16 object-cover rounded border border-zinc-700 shrink-0"
+                  />
+                ) : failedImages.has(game.id) ? (
+                  <div className="w-12 h-16 rounded border border-zinc-700 shrink-0 bg-zinc-800 flex items-center justify-center text-zinc-500 text-xs">
+                    🎮
+                  </div>
+                ) : (
+                  <div className="w-12 h-16 rounded border border-zinc-700 shrink-0 bg-zinc-800 animate-pulse" />
+                )}
+                <span>{game.title}</span>
               </Link>
             </li>
           ))}
