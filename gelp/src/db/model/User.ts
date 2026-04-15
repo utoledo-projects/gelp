@@ -9,6 +9,7 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   isAdministrator: boolean;
+  library: mongoose.Types.ObjectId[];
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -47,7 +48,11 @@ const userSchema = new mongoose.Schema<IUser>({
     type: mongoose.Schema.Types.Boolean,
     required: true,
     default: false
-  }
+  },
+  library: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Game'
+  }]
 });
 
 declare global {
