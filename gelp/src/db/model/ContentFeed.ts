@@ -5,7 +5,7 @@ export interface IContentFeed {
   summary: string;
   feedImage?: string;
   game: mongoose.Types.ObjectId;
-  type?: 'release' | 'update' | 'popular' | 'recommendation';
+  type: 'release' | 'update' | 'popular' | 'recommendation';
 }
 
 const contentFeedSchema = new mongoose.Schema<IContentFeed>({
