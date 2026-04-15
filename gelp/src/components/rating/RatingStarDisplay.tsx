@@ -7,7 +7,7 @@ type NewRatingsStarsDisplayProps = {
   singleRating?: boolean;
 }
 
-const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, singleRating}) => {
+const RatingStarDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, singleRating}) => {
   const stars = useMemo(() => {
     const value = Number((sum / count).toFixed(1));
     const stars: number[] = [];
@@ -55,4 +55,4 @@ const NewRatingsStarsDisplay: FC<NewRatingsStarsDisplayProps> = ({sum, count, si
   </div>;
 }
 
-export default NewRatingsStarsDisplay;
+export default RatingStarDisplay;
