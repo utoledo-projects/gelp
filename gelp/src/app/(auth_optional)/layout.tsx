@@ -20,6 +20,7 @@ const AuthOptionalLayout: FC<PropsWithChildren> = async ({children}) => {
     email: user.email,
     emailVerified: user.emailVerified,
     avatar: user.avatar,
+    following: user.following,
     isAdministrator: user.isAdministrator
   } : null}>
     <Navbar />
