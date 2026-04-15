@@ -53,7 +53,7 @@ const GenreTag: FC<GenreTagProps> = ({genre, link}) => {
   return <Link href={`/src/app/(auth_optional)/genre/${genre.toLowerCase()}`} className='block transition-all hover:-translate-y-1'>
     <button style={{
       backgroundColor: color
-    }} className='px-2 py-1 rounded-lg text-shadow-neutral-900 text-shadow-sm' type='button'>
+    }} className='px-2 py-1 rounded-lg text-shadow-neutral-900 text-shadow-sm cursor-pointer' type='button'>
       {toTitleCase(genre)}
     </button>
   </Link>

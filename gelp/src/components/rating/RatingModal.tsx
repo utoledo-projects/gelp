@@ -84,10 +84,10 @@ export const RatingModal: FC<RatingModalProps> = ({game, close, edit, set}) => {
 
           <div className='flex gap-2'>
             <button disabled={rating === 0 || loading || (!!edit && edit.score === rating && (edit.review ?? '') === text)} onClick={submit}
-                    className='flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 p-1 rounded-lg'>
+                    className='flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 p-1 rounded-lg cursor-pointer disabled:cursor-default'>
               Submit
             </button>
-            <button disabled={loading} onClick={close} className="flex-1 bg-zinc-600 hover:bg-zinc-700 disabled:bg-zinc-600/50 p-1 rounded-lg">
+            <button disabled={loading} onClick={close} className="flex-1 bg-zinc-600 hover:bg-zinc-700 disabled:bg-zinc-600/50 p-1 rounded-lg cursor-pointer disabled:cursor-default">
               Close
             </button>
           </div>
