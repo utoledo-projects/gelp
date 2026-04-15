@@ -38,9 +38,9 @@ const GameRatingList: FC<GameRatingListProps> = ({gameID, rating}) => {
   const updatedRatings = useMemo(() => {
     const updated = [...(ratings ?? [])];
 
-    if (user === null)
+    if (!user)
       return updated;
-    if (rating === null)
+    if (!rating)
       return updated;
 
     const i = updated.findIndex((r) => r._id === rating._id);
