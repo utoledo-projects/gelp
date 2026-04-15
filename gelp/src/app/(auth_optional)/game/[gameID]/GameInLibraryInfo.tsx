@@ -25,7 +25,7 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
         const res = await fetch(`/api/library/game/${gameID}`);
         if (!res.ok) throw new Error("Failed to fetch library status");
         const data = await res.json();
-        
+
         setIsInLibrary(data.isInLibrary);
       } catch (err) {
         console.error("Error checking library status:", err);
@@ -45,12 +45,12 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ gameID })
       });
-      
+
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || 'Failed to add to library');
       }
-      
+
       setIsInLibrary(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to add to library');
@@ -68,12 +68,12 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ gameID })
       });
-      
+
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || 'Failed to remove from library');
       }
-      
+
       setIsInLibrary(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to remove from library');
@@ -93,8 +93,8 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
       {isInLibrary === true && <p>This game is in your library</p>}
       {error && <p className='text-red-500'>{error}</p>}
       {isInLibrary === false && (
-        <button 
-          className='bg-blue-600 rounded-lg py-1 px-2 disabled:opacity-50'
+        <button
+          className='bg-blue-600 rounded-lg py-1 px-2 disabled:opacity-50 cursor-pointer disabled:cursor-default'
           onClick={addToLibrary}
           disabled={isLoading}
         >
@@ -102,8 +102,8 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
         </button>
       )}
       {isInLibrary === true && (
-        <button 
-          className='bg-red-600 rounded-lg py-1 px-2 disabled:opacity-50'
+        <button
+          className='bg-red-600 rounded-lg py-1 px-2 disabled:opacity-50 cursor-pointer disabled:cursor-default'
           onClick={removeFromLibrary}
           disabled={isLoading}
         >

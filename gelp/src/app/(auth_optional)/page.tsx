@@ -1,11 +1,11 @@
-import FriendActivity from "@/app/(auth_optional)/home/FriendActivity";
-import GlobalActivity from "@/app/(auth_optional)/home/GlobalActivity";
+import FriendActivity from "@/components/activity/FriendActivity";
+import GlobalActivity from "@/components/activity/GlobalActivity";
 import {FC} from "react";
 
 const HomePage: FC = () => {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-indigo-500/30 p-10">
-      <div className="max-w-7xl mx-auto flex gap-12">
+    <main className="flex flex-col flex-1 bg-black text-white selection:bg-indigo-500/30 min-h-0">
+      <div className="h-full max-w-7xl mx-auto flex gap-2">
         <GlobalActivity/>
         <FriendActivity/>
       </div>

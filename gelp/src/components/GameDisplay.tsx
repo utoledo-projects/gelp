@@ -3,7 +3,7 @@ import {FC} from "react";
 import Link from "next/link";
 import mongoose from "mongoose";
 import GenreTag from "@/components/GenreTag";
-import NewRatingsStarsDisplay from "@/components/rating/NewRatingsStarsDisplay";
+import RatingStarDisplay from "@/components/rating/RatingStarDisplay";
 
 type GameDisplayProps = {
   game: IGame & {_id: string | mongoose.Types.ObjectId};
@@ -28,15 +28,15 @@ const GameDisplay: FC<GameDisplayProps> = ({game, genre, ratings}) => {
       </div>
       {/* Info */}
       <div className='flex flex-col p-3 gap-2 relative'>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center gap-2'>
           <h2 className='text-lg font-bold text-white line-clamp-1'>{game.title}</h2>
           {genre !==undefined && <GenreTag genre={genre} link={false}/>}
         </div>
 
         <p className="text-sm text-zinc-400 line-clamp-2 leading-snug">
-          Game summary will go here.
+          {game.summary}
         </p>
-        <NewRatingsStarsDisplay sum={ratings.sum} count={ratings.count}/>
+        <RatingStarDisplay sum={ratings.sum} count={ratings.count}/>
       </div>
     </div>
   </Link>

@@ -6,14 +6,14 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import GameDisplay from "@/components/GameDisplay";
 
 type GamesByGenreProps = {
-  genre: string;
+  developer: string;
 }
 
 const FETCH_LIMIT = 100;
 
 type GameWithRatings = IGame & {_id: string, ratingSum: number, ratingCount: number};
 
-const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
+const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
   const [games, setGames] = useState<GameWithRatings[] | null>(null);
 
   const skipRef = useRef(0);
@@ -34,7 +34,7 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/games/genre/${genre}?skip=${skipRef.current}&limit=${FETCH_LIMIT}`)
+      const res = await fetch(`/api/games/developer/${encodeURIComponent(developer)}?skip=${skipRef.current}&limit=${FETCH_LIMIT}`)
       if (!res.ok) throw new Error('Failed to fetch games.');
 
       const data = await res.json();
@@ -58,7 +58,7 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
       setLoading(false);
       loadingRef.current = false;
     }
-  }, [genre]);
+  }, [developer]);
 
   useInfiniteScroll(
     wrapperRef,
@@ -71,7 +71,7 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
     console.log(games);
   }, [games]);
 
-  return <div ref={wrapperRef}>
+  return <div ref={wrapperRef} className='flex gap-4 flex-wrap'>
     {games !== null && games.map((game) => (
       <GameDisplay
         key={game._id}
@@ -80,7 +80,6 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
           sum: game.ratingSum,
           count: game.ratingCount
         }}
-        genre={genre}
       />
     ))}
     {games !== null && games.length === 0 && <p>No games found.</p>}
@@ -89,4 +88,4 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
   </div>
 }
 
-export default GamesByGenre;
+export default GamesByDeveloper;

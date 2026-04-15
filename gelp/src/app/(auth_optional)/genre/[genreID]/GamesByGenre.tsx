@@ -1,19 +1,19 @@
 "use client";
 
-import {FC, useCallback, useEffect, useRef, useState} from "react";
+import {FC, useCallback, useRef, useState} from "react";
 import {IGame} from "@/db";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import GameDisplay from "@/components/GameDisplay";
 
 type GamesByGenreProps = {
-  developer: string;
+  genre: string;
 }
 
 const FETCH_LIMIT = 100;
 
 type GameWithRatings = IGame & {_id: string, ratingSum: number, ratingCount: number};
 
-const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
+const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
   const [games, setGames] = useState<GameWithRatings[] | null>(null);
 
   const skipRef = useRef(0);
@@ -34,7 +34,7 @@ const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/games/developer/${encodeURIComponent(developer)}?skip=${skipRef.current}&limit=${FETCH_LIMIT}`)
+      const res = await fetch(`/api/games/genre/${genre}?skip=${skipRef.current}&limit=${FETCH_LIMIT}`)
       if (!res.ok) throw new Error('Failed to fetch games.');
 
       const data = await res.json();
@@ -58,7 +58,7 @@ const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
       setLoading(false);
       loadingRef.current = false;
     }
-  }, [developer]);
+  }, [genre]);
 
   useInfiniteScroll(
     wrapperRef,
@@ -67,11 +67,7 @@ const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
     fetchGames
   );
 
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
-
-  return <div ref={wrapperRef}>
+  return <div ref={wrapperRef} className='flex flex-wrap gap-4'>
     {games !== null && games.map((game) => (
       <GameDisplay
         key={game._id}
@@ -80,6 +76,7 @@ const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
           sum: game.ratingSum,
           count: game.ratingCount
         }}
+        genre={genre}
       />
     ))}
     {games !== null && games.length === 0 && <p>No games found.</p>}
@@ -88,4 +85,4 @@ const GamesByDeveloper: FC<GamesByGenreProps> = ({developer}) => {
   </div>
 }
 
-export default GamesByDeveloper;
+export default GamesByGenre;

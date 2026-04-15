@@ -1,8 +1,7 @@
 import {IUser} from "@/db";
 import {Token} from "@/db/model/Token";
-import mongoose from "mongoose";
 
-const getUser = async (G_ACCESS_TOKEN?: string): Promise<null | IUser & {_id: mongoose.Types.ObjectId}> => {
+const getUser = async (G_ACCESS_TOKEN?: string): Promise<null | Omit<IUser & {_id: string}, 'password' | 'createdAt' | 'updatedAt'>> => {
   if (!G_ACCESS_TOKEN)
     return null;
 
@@ -16,7 +15,14 @@ const getUser = async (G_ACCESS_TOKEN?: string): Promise<null | IUser & {_id: mo
   if (user === null)
     return null;
 
-  return user.toJSON();
+  return {
+    _id: user._id.toString(),
+    username: user.username,
+    email: user.email,
+    emailVerified: user.emailVerified,
+    avatar: user.avatar,
+    isAdministrator: user.isAdministrator
+  };
 }
 
 export default getUser;

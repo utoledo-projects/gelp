@@ -15,19 +15,24 @@ const RefreshToken = () => {
   }, []);
 
   useEffect(() => {
+    console.log('mounted');
     refresh()
       .then(res => {
         if (res.status === 200) {
-          if (params.has('redirect')) {
+          if (params.has(`redirect ${params.get('redirect')}`)) {
+            console.log('redirecting...');
             router.replace(params.get('redirect')!);
           } else {
+            console.log('redirecting home...');
             router.replace('/');
           }
         } else {
+          console.log('redirecting login');
           router.replace(`/auth/login?${params.toString()}`);
         }
       })
       .catch(() => {
+        console.log('redirecting login');
         router.replace(`/auth/login?${params.toString()}`);
       });
   }, [refresh]);

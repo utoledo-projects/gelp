@@ -11,7 +11,7 @@ type GenreTagProps = {
 const hash = (str: string) => {
   let h = 2;
   for (let i = 0; i < str.length; i++) {
-    h *= str.charCodeAt(i) * 23;
+    h *= str.charCodeAt(i) * 25;
     h += str.charCodeAt(i);
     h %= 360;
   }
@@ -21,6 +21,12 @@ const hash = (str: string) => {
 const toTitleCase = (str: string) => {
   if (str === 'rpg')
     return 'RPG';
+  if (str === 'role-playing (rpg)')
+    return 'RPG';
+  if (str === 'real time strategy (rts)')
+    return 'RTS';
+  if (str === 'turn-based strategy (tbs)')
+    return 'TBS';
 
   return str
     .toLowerCase()
@@ -47,7 +53,7 @@ const GenreTag: FC<GenreTagProps> = ({genre, link}) => {
   return <Link href={`/genre/${genre.toLowerCase()}`} className='block transition-all hover:-translate-y-1'>
     <button style={{
       backgroundColor: color
-    }} className='px-2 py-1 rounded-lg text-shadow-neutral-900 text-shadow-sm' type='button'>
+    }} className='px-2 py-1 rounded-lg text-shadow-neutral-900 text-shadow-sm cursor-pointer' type='button'>
       {toTitleCase(genre)}
     </button>
   </Link>

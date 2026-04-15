@@ -3,6 +3,7 @@ import {cookies} from "next/headers";
 import getUser from "@/actions/getUser";
 import UserContext from "@/context/UserContext";
 import Redirect from "@/components/util/Redirect";
+import Navbar from "@/components/Navbar";
 
 const AuthOptionalLayout: FC<PropsWithChildren> = async ({children}) => {
   const cookieStore = await cookies();
@@ -19,10 +20,9 @@ const AuthOptionalLayout: FC<PropsWithChildren> = async ({children}) => {
     email: user.email,
     emailVerified: user.emailVerified,
     avatar: user.avatar,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
     isAdministrator: user.isAdministrator
   } : null}>
+    <Navbar />
     {children}
   </UserContext>
 }
