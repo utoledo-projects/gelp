@@ -89,7 +89,7 @@ const FollowingGames: FC<FollowingGamesProps> = ({user}) => {
       {error ?? 'Failed to load.'}
     </div>
 
-  return <div className='flex flex-wrap gap-4'>
+  return <div className='flex flex-wrap gap-4 items-stretch'>
     {games.map((game) => (
      <UserLibraryGameDisplay key={game._id} user={user} game={game} rating={ratedSet[game._id]} inLibrary={librarySet[game._id]}/>
     ))}

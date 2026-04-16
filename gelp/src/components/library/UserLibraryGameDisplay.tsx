@@ -16,7 +16,7 @@ type UserLibraryGameDisplayProps = {
 
 const UserLibraryGameDisplay: FC<UserLibraryGameDisplayProps> = ({user, game, rating, inLibrary}) => {
   return <Link href={`/game/${game._id}`} className='block'>
-    <div className='group relative overflow-hidden rounded-xl bg-zinc-900 shadow-2xl transition-all hover:-translate-y-1 border border-zinc-800/50 flex flex-col w-66'>
+    <div className='group relative overflow-hidden rounded-xl bg-zinc-900 shadow-2xl transition-all hover:-translate-y-1 border border-zinc-800/50 flex flex-col w-66 h-full'>
       <div className='relative 2-66 h-93.5 overflow-hidden shrink-0'>
         <img
           src={game.coverArt}
@@ -34,7 +34,7 @@ const UserLibraryGameDisplay: FC<UserLibraryGameDisplayProps> = ({user, game, ra
         {rating && <div className='flex flex-col gap-2'>
           <span>{user.username}'s Rating</span>
           <RatingStarDisplay sum={rating.score} count={1} singleRating/>
-          <span className={`${rating.review ? 'text-white' : 'text-zinc-400'}`}>{rating.review || 'No review body.'}</span>
+          {rating.review && <span>{rating.review}</span>}
         </div>}
         {!rating && <div>
           <span className='text-zinc-400'>This user has not rated this game.</span>
