@@ -21,7 +21,10 @@ const Page = async ({params}: {params: Promise<{userID: string}>}) => {
         <FollowButton userID={user._id.toString()}/>
       </div>
     </div>
-    <FollowingGames/>
+    <FollowingGames user={{
+      _id: user._id.toString(),
+      username: user.username
+    }}/>
   </div>
 }
 

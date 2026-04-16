@@ -70,8 +70,6 @@ export const DELETE = async (req: NextRequest, {params}: {params: Promise<{userI
 
   const targetUser = await User.findById(userID).exec();
 
-  console.log(user, userID, targetUser);
-
   if (targetUser === null)
     return new Response(JSON.stringify({error: 'User not found.'}), {status: 404});
 
