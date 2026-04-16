@@ -11,7 +11,7 @@ const Page = async ({params}: {params: Promise<{userID: string}>}) => {
       <h1>User not found.</h1>
     </div>
 
-  return <div className='flex flex-col max-w-7xl mx-auto p-4 w-full flex-1 gap-6'>
+  return <div className='flex flex-col max-w-7xl mx-auto p-4 w-full flex-1 gap-6 min-h-0 overflow-y-auto'>
     <div className='flex justify-between items-center'> {/* User Header */}
       <div className='flex items-center gap-4'>
         <UserIcon user={user} size={48}/>

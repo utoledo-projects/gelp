@@ -64,7 +64,7 @@ const Page = async ({params}: { params: Promise<{ gameID: string }> }) => {
       </p>
     </main>
 
-  return <main className='min-h-screen bg-black text-white selection:bg-indigo-500/30 p-10'>
+  return <main className='flex-1 bg-black text-white selection:bg-indigo-500/30 p-10 min-h-0'>
     <PageClient game={{
       ...game.toJSON(),
       _id: game._id.toString()
