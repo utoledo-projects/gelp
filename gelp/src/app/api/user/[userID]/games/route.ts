@@ -1,16 +1,8 @@
-import getUser from "@/actions/getUser";
-import {NextRequest, NextResponse} from "next/server";
+import {NextRequest} from "next/server";
 import mongoose from "mongoose";
 import {IGame, IRating} from "@/db";
 
 export const GET = async (req: NextRequest, {params}: {params: Promise<{userID: string}>}) => {
-  // Begin Auth Check
-  const access = req.cookies.get('G_ACCESS_TOKEN');
-  const user = await getUser(access?.value);
-  if (user === null)
-    return new NextResponse(JSON.stringify({error: 'Unauthorized.'}), {status: 401});
-  // End auth check
-
   const {userID} = await params;
 
   const u = await User.findById(userID).exec();

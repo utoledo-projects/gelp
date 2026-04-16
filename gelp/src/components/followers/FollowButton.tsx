@@ -1,12 +1,15 @@
 "use client";
 
 import {FC, useCallback, useEffect, useRef, useState} from "react";
+import useUser from "@/hooks/useUser";
 
 type FollowButtonProps = {
   userID: string;
 }
 
 const FollowButton: FC<FollowButtonProps> = ({userID}) => {
+  const user = useUser();
+
   const [following, setFollowing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,6 +71,9 @@ const FollowButton: FC<FollowButtonProps> = ({userID}) => {
   }, [following, userID]);
 
   const text = following ? 'Unfollow' : 'Follow';
+
+  if (!user)
+    return <span>Sign in to follow.</span>
 
   if (error)
     return <button disabled className='bg-red-500 px-3 py-2 rounded-xl font-bold'>{error}</button>
