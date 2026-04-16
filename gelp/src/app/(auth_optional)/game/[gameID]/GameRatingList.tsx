@@ -130,8 +130,7 @@ const GameRatingList: FC<GameRatingListProps> = ({gameID, rating}) => {
         <div key={rating._id} className='bg-zinc-900 p-3 rounded-xl flex flex-col gap-2 max-w-87.5'>
           <Link href={`/user/${rating.user._id}`} className='font-bold hover:underline'>{rating.user.username}</Link>
           <RatingStarDisplay sum={rating.score} count={1} singleRating/>
-          {rating.review ? <span>{rating.review}</span> :
-            <span className='text-zinc-400'>This review doesn't have a body.</span>}
+          {rating.review && <span>{rating.review}</span>}
         </div>
       ))}
       <div ref={bottomRef} className='min-w-1 min-h-1'/>

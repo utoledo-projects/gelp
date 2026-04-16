@@ -90,7 +90,6 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, game, setRating}) => {
             <span className='text-zinc-500 ml-2'>({existing.score})</span>
           </div>
           {existing.review && <span>{existing.review}</span>}
-          {!existing.review && <span className='text-zinc-500'>No review body.</span>}
         </div>
       </>}
     </>}
