@@ -28,12 +28,11 @@ export default function FeedReviewPost({
           <Link href={`/game/${game._id}`}><span className="text-emerald-400 font-bold hover:underline">{game.title}</span></Link>
         </p>
 
-        <p className={`text-sm ${review.length > 0 ? 'text-white' : 'text-zinc-400'}`}>
-          {review || 'No review body.'}
-        </p>
+        {review.length > 0 && <p>
+          {review}
+        </p>}
 
         <RatingStarDisplay sum={score} count={1} singleRating/>
-
       </div>
     </div>
   );
