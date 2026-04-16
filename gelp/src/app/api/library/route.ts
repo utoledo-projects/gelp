@@ -61,6 +61,12 @@ export async function POST(req: NextRequest) {
       { new: true }
     ).exec();
 
+    await UserActivity.create({
+      user: user._id,
+      game: gameID,
+      type: 'ADD_TO_LIBRARY'
+    });
+
     if (!updatedUser)
       return new NextResponse(JSON.stringify({error: 'User not found'}), {status: 404});
 
