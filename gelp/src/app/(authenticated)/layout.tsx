@@ -22,6 +22,7 @@ const AuthenticatedLayout: FC<PropsWithChildren> = async ({children}) => {
     emailVerified: user.emailVerified,
     avatar: user.avatar,
     following: user.following,
+    library: user.library,
     isAdministrator: user.isAdministrator
   }}>
     <Navbar />
