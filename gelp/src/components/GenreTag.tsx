@@ -50,7 +50,7 @@ const GenreTag: FC<GenreTagProps> = ({genre, link}) => {
       </button>
     </div>
 
-  return <Link href={`/genre/${genre.toLowerCase()}`} className='block transition-all hover:-translate-y-1'>
+  return <Link href={`/genre/${encodeURIComponent(genre.toLowerCase())}`} className='block transition-all hover:-translate-y-1'>
     <button style={{
       backgroundColor: color
     }} className='px-2 py-1 rounded-lg text-shadow-neutral-900 text-shadow-sm cursor-pointer' type='button'>
