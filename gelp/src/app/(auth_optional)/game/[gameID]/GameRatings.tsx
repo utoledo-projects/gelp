@@ -17,6 +17,7 @@ type GameRatingsProps = {
 }
 
 const GameRatings: FC<GameRatingsProps> = ({ratings, game, setRating}) => {
+  const user = useUser();
   const [showModal, setShowModal] = useState(false);
   const loadingRef = useRef(false);
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,8 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, game, setRating}) => {
   }, [existing]);
 
   useEffect(() => {
+    if (!user)
+      return;
     if (loadingRef.current)
       return;
 
@@ -56,23 +59,21 @@ const GameRatings: FC<GameRatingsProps> = ({ratings, game, setRating}) => {
         loadingRef.current = false;
         setLoading(false);
       });
-  }, [game]);
-
-  const user = useUser();
+  }, [game, user]);
 
   return <div className='flex flex-col gap-4'>
     <h1 className='text-3xl'>Ratings</h1>
     {error && <span className='text-red-500'>{error}</span>}
     {ratings.count === 0 && <>
       <p>No ratings yet.</p>
-      {user === null && <p><Link href='/auth/login'>Sign in</Link> to rate this game.</p>}
+      {user === null && <p><Link href='/auth/login' className='underline'>Sign in</Link> to rate this game.</p>}
       {user !== null &&
         <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2 cursor-pointer disabled:cursor-default' onClick={() => setShowModal(true)}>Be the
           first to rate this game!</button>}
     </>}
     {ratings.count > 0 && <>
       <RatingStarDisplay sum={ratings.sum} count={ratings.count}/>
-      {user === null && <p><Link href='/auth/login'>Sign in</Link> to rate this game.</p>}
+      {user === null && <p><Link href='/auth/login' className='underline'>Sign in</Link> to rate this game.</p>}
       {user !== null && !existing &&
         <button disabled={loading} className='bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 rounded-lg py-1 px-2 cursor-pointer disabled:cursor-default' onClick={() => setShowModal(true)}>
           Rate this game
