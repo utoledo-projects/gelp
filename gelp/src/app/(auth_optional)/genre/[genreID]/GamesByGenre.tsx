@@ -34,7 +34,7 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/games/genre/${genre}?skip=${skipRef.current}&limit=${FETCH_LIMIT}`)
+      const res = await fetch(`/api/games/genre/${encodeURIComponent(genre)}?skip=${skipRef.current}&limit=${FETCH_LIMIT}`)
       if (!res.ok) throw new Error('Failed to fetch games.');
 
       const data = await res.json();
