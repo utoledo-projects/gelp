@@ -85,7 +85,7 @@ const GameInLibraryInfo: FC<GameInLibraryInfoProps> = ({gameID}) => {
   return <div className='flex flex-col gap-4'>
     <h1 className='text-3xl'>Library</h1>
     {user === null && <>
-      <p><Link href='/auth/login'>Sign in</Link> to add this game to your library.</p>
+      <p><Link href='/auth/login' className='underline'>Sign in</Link> to add this game to your library.</p>
     </>}
     {user !== null && <>
       {isInLibrary === null && <p>Loading library status...</p>}
