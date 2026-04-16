@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import getUser from "@/actions/getUser";
-import {IRating} from "@/db";
+import {IRating, UserActivity} from "@/db";
 import {HydratedDocument} from "mongoose";
 
 const VALID_RATINGS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -63,6 +63,13 @@ export const POST = async (req: NextRequest, {params}: {params: Promise<{gameID:
     console.error(e);
     return new Response(JSON.stringify({error: 'Failed to create rating.'}), {status: 500});
   }
+
+  await UserActivity.create({
+    user: user._id,
+    game: gameID,
+    rating: rating._id,
+    type: 'REVIEW'
+  });
 
   return new Response(JSON.stringify({
     message: 'success.',
