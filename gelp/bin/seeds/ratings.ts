@@ -76,6 +76,7 @@ for (const user of users) {
         score: Math.floor(Math.random() * 4) + 1, // between 1 and 5
         review: text
       });
+      await User.updateOne({_id: user._id}, {$addToSet: {library: selected[i]._id}});
       const ratingTime = Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000); // Random time within the last 7 days
       await UserActivity.create({
         type: 'ADD_TO_LIBRARY',
@@ -90,7 +91,8 @@ for (const user of users) {
         rating: rating._id,
         timestamp: new Date(Date.now() - ratingTime)
       });
-    } catch {
+    } catch (e) {
+      console.error(e);
       console.warn('[WARN] Failed to create a rating.');
     }
   }
@@ -106,6 +108,7 @@ for (const user of users) {
         score: Math.floor(Math.random() * 6) + 5, // between 5 and 10
         review: text
       });
+      await User.updateOne({_id: user._id}, {$addToSet: {library: selected[i]._id}});
       const ratingTime = Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000); // Random time within the last 7 days
       await UserActivity.create({
         type: 'REVIEW',

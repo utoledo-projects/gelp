@@ -16,7 +16,6 @@ const Logout = () => {
     logout()
       .then(async (res) => {
         if (res.status === 200) {
-          console.log('logged out');
           window.location.replace('/');
         } else {
           const json = await res.json();

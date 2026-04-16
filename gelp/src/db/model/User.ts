@@ -58,7 +58,9 @@ const userSchema = new mongoose.Schema<IUser>({
   }],
   library: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Game'
+    ref: 'Game',
+    required: true,
+    default: []
   }]
 });
 

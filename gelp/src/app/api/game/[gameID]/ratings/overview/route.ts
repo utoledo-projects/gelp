@@ -21,7 +21,6 @@ export const GET = async (req: NextRequest, {params}: {params: Promise<{gameID: 
       }
     }
   ]).then((res) => {
-    console.log(res);
     if (res.length === 0)
       return 0;
     return res[0].totalSum
