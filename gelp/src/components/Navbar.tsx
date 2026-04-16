@@ -48,6 +48,15 @@ export default function Navbar() {
             </div>
           )}
 
+          {user && pathname !== '/library' && (
+            <Link 
+              href="/library" 
+              className="px-3 py-1.5 border border-zinc-800 rounded text-zinc-400 hover:text-zinc-100 hover:border-zinc-500 hover:bg-zinc-900/50 transition-all uppercase tracking-wider"
+            >
+              Library
+            </Link>
+          )}
+
           <div className="flex items-center gap-4 pl-6 border-l border-zinc-800 h-8">
             {user ? (
               <div className="flex items-center relative">
