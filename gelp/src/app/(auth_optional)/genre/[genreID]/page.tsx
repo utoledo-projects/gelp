@@ -29,8 +29,8 @@ const GenrePage = async ({params}: { params: Promise<{genreID: string }>}) => {
   
   const color = `hsl(${hash(genreID)}, 65%, 45%)`;
 
-  return <main className='min-h-screen bg-black text-white selection:bg-indigo-500/30 p-10'>
-    <div className='max-w-7xl mx-auto flex gap-12'>
+  return <main className='flex-1 bg-black text-white selection:bg-indigo-500/30 p-10 min-h-0'>
+    <div className='max-w-7xl mx-auto flex gap-12 h-full'>
       <div className="flex flex-col gap-6">
         <h1 className="text-5xl font-extrabold tracking-tight" style={{ color }}>
           {toTitleCase(genreID)}

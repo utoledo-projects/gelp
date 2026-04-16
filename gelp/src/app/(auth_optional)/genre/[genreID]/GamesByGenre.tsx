@@ -67,7 +67,7 @@ const GamesByGenre: FC<GamesByGenreProps> = ({genre}) => {
     fetchGames
   );
 
-  return <div ref={wrapperRef} className='flex flex-wrap gap-4'>
+  return <div ref={wrapperRef} className='flex-1 flex flex-wrap gap-4 h-full overflow-y-auto'>
     {games !== null && games.map((game) => (
       <GameDisplay
         key={game._id}

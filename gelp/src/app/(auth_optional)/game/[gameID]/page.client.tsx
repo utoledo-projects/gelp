@@ -19,8 +19,8 @@ type PageClientProps = {
 const PageClient: FC<PageClientProps> = ({game, ratings}) => {
   const [myRating, setMyRating] = useState<IRating & {_id: string} | null>(null);
 
-  return <>
-    <div className='max-w-7xl bg-neutral-900 p-4 flex rounded-4xl mx-auto gap-8'>
+  return <div className='max-w-7xl mx-auto h-full overflow-y-auto'>
+    <div className='bg-neutral-900 p-4 flex rounded-4xl gap-8'>
       <CoverArt game={game}/>
       <GameInfo game={game}/>
       <div className='flex-1 flex flex-col gap-16'>
@@ -29,7 +29,7 @@ const PageClient: FC<PageClientProps> = ({game, ratings}) => {
       </div>
     </div>
     <GameRatingList gameID={game._id} rating={myRating}/>
-  </>
+  </div>
 }
 
 export default PageClient;

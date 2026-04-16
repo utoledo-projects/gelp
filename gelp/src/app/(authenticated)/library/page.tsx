@@ -70,8 +70,8 @@ export default function LibraryPage() {
   }
 
   return (
-    <main className='min-h-screen bg-black text-white selection:bg-indigo-500/30 p-10'>
-      <div className='max-w-7xl mx-auto'>
+    <main className='flex-1 bg-black text-white selection:bg-indigo-500/30 p-10 min-h-0'>
+      <div className='max-w-7xl mx-auto h-full overflow-y-auto'>
         <h1 className='text-3xl mb-8'>My Library ({total} Game{total !== 1 ? 's' : ''})</h1>
         {library.length === 0 ? (
           <p>Your library is empty. <Link href='/' className='text-blue-400 hover:underline'>Browse games</Link> to add some!</p>
@@ -83,7 +83,7 @@ export default function LibraryPage() {
                 href={`/game/${game._id}`}
                 className='bg-neutral-900 rounded-lg overflow-hidden hover:scale-105 transition-transform duration-200'
               >
-                <div className='aspect-[3/4] relative'>
+                <div className='aspect-3/4 relative'>
                   <Image
                     src={game.coverArt}
                     alt={game.title}
