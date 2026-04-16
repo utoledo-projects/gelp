@@ -75,6 +75,9 @@ const FollowButton: FC<FollowButtonProps> = ({userID}) => {
   if (!user)
     return <span>Sign in to follow.</span>
 
+  if (user._id === userID)
+    return null;
+
   if (error)
     return <button disabled className='bg-red-500 px-3 py-2 rounded-xl font-bold'>{error}</button>
 
