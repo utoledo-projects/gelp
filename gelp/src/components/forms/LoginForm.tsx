@@ -57,7 +57,7 @@ const LoginForm: FC = () => {
       });
   }
 
-  return <form className='bg-neutral-900 p-4 rounded-xl flex flex-col gap-2' onSubmit={submit}>
+  return <form className='bg-neutral-900 text-white p-4 rounded-xl flex flex-col gap-2' onSubmit={submit}>
     <label htmlFor='username'>Username</label>
     <input
       id='username'
@@ -66,7 +66,7 @@ const LoginForm: FC = () => {
       placeholder='Username'
       value={username}
       onChange={(e) => setUsername(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-lg min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-lg min-w-100'
       autoComplete='username'
     />
     <label htmlFor='password'>Password</label>
@@ -77,12 +77,12 @@ const LoginForm: FC = () => {
       placeholder='Password'
       value={password}
       onChange={(e) => setPassword(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-lg min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-lg min-w-100'
       autoComplete='current-password'
     />
     <div className='flex gap-4 items-center pt-4'>
-      <button disabled={!valid || loading} type='submit' className='bg-blue-500 hover:bg-blue-600 p-2 rounded-md disabled:opacity-80'>Login</button>
-      <span>Don't have an account? <Link href='/auth/register' className='text-blue-400 hover:text-blue-500 hover:underline'>Create one</Link>.</span>
+      <button disabled={!valid || loading} type='submit' className='bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md disabled:opacity-80'>Login</button>
+      <span className='text-neutral-300'>Don't have an account? <Link href='/auth/register' className='text-blue-400 hover:text-blue-500 hover:underline'>Create one</Link>.</span>
     </div>
     {errorMessage.length > 0 && <p className='text-red-500'>{errorMessage}</p>}
   </form>

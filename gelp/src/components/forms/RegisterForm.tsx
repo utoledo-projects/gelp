@@ -89,7 +89,7 @@ const RegisterForm: FC = () => {
       });
   }
 
-  return <form className='bg-neutral-900 p-4 rounded-xl flex flex-col gap-2' onSubmit={submit}>
+  return <form className='bg-neutral-900 text-white p-4 rounded-xl flex flex-col gap-2' onSubmit={submit}>
     <label htmlFor='username'>Username</label>
     <input
       id='username'
@@ -98,7 +98,7 @@ const RegisterForm: FC = () => {
       placeholder='Username'
       value={username}
       onChange={e => setUsername(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-md min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-md min-w-100'
     />
     {issues.filter(i => i.path.includes('username')).map((issue) => {
       return <p key={issue.message} className='text-red-500 text-sm'>{issue.message}</p>
@@ -111,7 +111,7 @@ const RegisterForm: FC = () => {
       placeholder='Email'
       value={email}
       onChange={e => setEmail(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-md min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-md min-w-100'
     />
     {issues.filter(i => i.path.includes('email') && !i.path.includes('confirmEmail')).map((issue) => {
       return <p key={issue.message} className='text-red-500s'>{issue.message}</p>
@@ -124,7 +124,7 @@ const RegisterForm: FC = () => {
       placeholder='Confirm Email'
       value={confirmEmail}
       onChange={e => setConfirmEmail(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-md min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-md min-w-100'
     />
     {issues.filter(i => i.path.includes('confirmEmail')).map((issue) => {
       return <p key={issue.message} className='text-red-500'>{issue.message}</p>
@@ -137,7 +137,7 @@ const RegisterForm: FC = () => {
       placeholder='Password'
       value={password}
       onChange={e => setPassword(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-md min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-md min-w-100'
     />
     {issues.filter(i => i.path.includes('password') && !i.path.includes('confirmPassword')).map((issue) => {
       return <p key={issue.message} className='text-red-500'>{issue.message}</p>
@@ -150,7 +150,7 @@ const RegisterForm: FC = () => {
       placeholder='Confirm Password'
       value={confirmPassword}
       onChange={e => setConfirmPassword(e.target.value)}
-      className='bg-neutral-800 p-2 rounded-md min-w-100'
+      className='bg-neutral-800 text-white placeholder-neutral-500 p-2 rounded-md min-w-100'
     />
     {issues.filter(i => i.path.includes('confirmPassword')).map((issue) => {
       return <p key={issue.message} className='text-red-500'>{issue.message}</p>
